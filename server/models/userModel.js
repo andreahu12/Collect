@@ -1,12 +1,14 @@
-// server/models/userModel.js
-// Written by Ryan Brooks
+/*jslint node: true */
+'use strict';
+
+// Dependencies
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    email: String,
 	username: String,
-	password: String
+	password: String,
+	email: String
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('UserModel', UserSchema);
