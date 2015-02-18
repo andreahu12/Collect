@@ -27,8 +27,14 @@ router.get('/', function(req, res) {
 	res.json({ message: 'Api working!' });
 });
 
+// Auth
 router.post('/user/signup', userController.signup);
 router.post('/user/login', userController.login);
+// Following
+router.post('/user/follow', userController.follow);
+router.post('/user/un-follow', userController.unFollow);
+router.post('/user/add-follower', userController.addFollower);
+router.post('/user/remove-follower', userController.removeFollower);
 
 // DB
 var db = mongoose.connect(config.mongoDB, function(err) {

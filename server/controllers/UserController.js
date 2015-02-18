@@ -18,9 +18,124 @@ var UserController = function(User) {
     User = User;
 };
 
-UserController.prototype.signup = function(req, res) {
-    console.log('Creating user...');
+// Follows user
+UserController.prototype.follow = function(req, res) {
+    var id = req.body.user_id;
+    var followingId = req.body.followingId;
 
+    User.findById(id)
+        .exec(function(err, user) {
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'An unknown error occurred'
+                });
+            }
+
+            if (!user) {
+                return res.json({
+                    status: false,
+                    message: 'Could not find user'
+                });
+            }
+
+            user.following.addToSet(followingId);
+        });
+};
+
+UserController.prototype.unFollow = function(req, res) {
+    var id = req.body.user_id;
+    var followingId = req.body.followingId;
+
+    User.findById(id)
+        .exec(function(err, user) {
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'An unknown error occurred'
+                });
+            }
+
+            if (!user) {
+                return res.json({
+                    status: false,
+                    message: 'Could not find user'
+                });
+            }
+
+            user.following.addToSet(followingId);
+        });
+};
+
+UserController.prototype.addFollower = function(req, res) {
+    var id = req.body.user_id;
+    var followerId = req.body.followerId;
+
+    User.findById(id)
+        .exec(function(err, user) {
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'An unknown error occurred'
+                });
+            }
+
+            if (!user) {
+                return res.json({
+                    status: false,
+                    message: 'Could not find user'
+                });
+            }
+
+            var userTwoIndex = user.following.indexOf(followerId);
+
+            if (userTwoIndex === -1) {
+                return res.json({
+                    status: false,
+                    message: 'User not following yet'
+                });
+            }
+
+            // Removes user Two
+            user.following.splice(userTwoIndex, 1);
+        });
+};
+
+UserController.prototype.removeFollower = function(req, res) {
+    var id = req.body.user_id;
+    var followerId = req.body.followerId;
+
+    User.findById(id)
+        .exec(function(err, user) {
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'An unknown error occurred'
+                });
+            }
+
+            if (!user) {
+                return res.json({
+                    status: false,
+                    message: 'Could not find user'
+                });
+            }
+
+            var userTwoIndex = user.followers.indexOf(followerId);
+
+            if (userTwoIndex === -1) {
+                return res.json({
+                    status: false,
+                    message: 'User not being followed yet'
+                });
+            }
+
+            // Removes user Two
+            user.followers.splice(userTwoIndex, 1);
+        });
+};
+
+UserController.prototype.signup = function(req, res) {
     passport.authenticate('signup', function(err, user, info) {
         // User not being serialized because no req.login
         // req.login supposed to be called automatically
@@ -65,6 +180,8 @@ UserController.prototype.login = function(req, res) {
 
             res.cookie('LOGIN_INFO', cookie, { domain: config.domain });
 
+            console.log('You are logged in', user);
+
             return res.json({
                 status: true,
                 user: user
@@ -75,10 +192,12 @@ UserController.prototype.login = function(req, res) {
 };
 
 passport.serializeUser(function(user, done) {
+    console.log('User._id', user._id);
     done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
+    console.log('YO', id);
     User.findById(id, function(err, user) {
         done(err, user);
     });
@@ -89,6 +208,8 @@ passport.use('login', new LocalStrategy({
         passReqToCallback: true
     }, function(req, email, password, callback) {
         email = email.toLowerCase();
+
+        console.log('YOYOY', email);
 
         User.findOne({ email: email }, function(err, user) {
             if (err) {
