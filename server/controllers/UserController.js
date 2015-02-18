@@ -18,6 +18,60 @@ var UserController = function(User) {
     User = User;
 };
 
+// Gets list of followers
+UserController.prototype.getFollowers = function(req, res) {
+    var id = req.query.user_id;
+
+    User.findById(id)
+        .exec(function(err, user) {
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'An unknown error occurred'
+                });
+            }
+
+            if (!user) {
+                return res.json({
+                    status: false,
+                    message: 'Could not find user'
+                });
+            }
+
+            return res.json({
+                status: true,
+                followers: user.followers
+            });
+        });
+};
+
+// Gets list of following
+UserController.prototype.getFollowing = function(req, res) {
+    var id = req.query.user_id;
+
+    User.findById(id)
+        .exec(function(err, user) {
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'An unknown error occurred'
+                });
+            }
+
+            if (!user) {
+                return res.json({
+                    status: false,
+                    message: 'Could not find user'
+                });
+            }
+
+            return res.json({
+                status: true,
+                following: user.following
+            });
+        });
+};
+
 // Follows user
 UserController.prototype.follow = function(req, res) {
     var id = req.body.user_id;
