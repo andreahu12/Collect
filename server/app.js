@@ -27,8 +27,21 @@ router.get('/', function(req, res) {
 	res.json({ message: 'Api working!' });
 });
 
+<<<<<<< HEAD
 router.post('/user/signup', userController.signup);
 router.post('/user/login', userController.login);
+=======
+// Auth
+router.post('/user/signup', userController.signup);
+router.post('/user/login', userController.login);
+// Following
+router.post('/user/follow', userController.follow);
+router.post('/user/un-follow', userController.unFollow);
+router.post('/user/add-follower', userController.addFollower);
+router.post('/user/remove-follower', userController.removeFollower);
+router.get('/user/get-followers', userController.getFollowers);
+router.get('/user/get-following', userController.getFollowing);
+>>>>>>> a6d0b71d7cffe3712872232a54bba4af760dc863
 
 // DB
 var db = mongoose.connect(config.mongoDB, function(err) {
