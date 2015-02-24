@@ -18,6 +18,7 @@ var UserController = function(User) {
     User = User;
 };
 
+<<<<<<< HEAD
 // Gets list of all followers
 UserController.prototype.getAllUsers = function(req, res) {
     User.find(function(err, users) {
@@ -29,6 +30,8 @@ UserController.prototype.getAllUsers = function(req, res) {
         });
 }
 
+=======
+>>>>>>> d48a7356412f0a93f1fb7ff11a0c179facbb8ef5
 // Gets list of followers
 UserController.prototype.getFollowers = function(req, res) {
     var id = req.query.user_id;
@@ -104,7 +107,11 @@ UserController.prototype.follow = function(req, res) {
                 });
             }
 
+<<<<<<< HEAD
             user.following.addToSet(followingId);
+=======
+            user.following.push(followingId);
+>>>>>>> d48a7356412f0a93f1fb7ff11a0c179facbb8ef5
         });
 };
 
@@ -128,14 +135,37 @@ UserController.prototype.unFollow = function(req, res) {
                 });
             }
 
+<<<<<<< HEAD
             user.following.addToSet(followingId);
+=======
+            // Add following
+            user.following.addToSet(followingId);
+            user.save(function(err, user) {
+                if (err) {
+                    console.log('Error in addFollower():', err);
+                }
+
+                return res.json({
+                    status: true,
+                    object: user
+                });
+            });
+>>>>>>> d48a7356412f0a93f1fb7ff11a0c179facbb8ef5
         });
 };
 
 UserController.prototype.addFollower = function(req, res) {
+<<<<<<< HEAD
     var id = req.body.user_id;
     var followerId = req.body.followerId;
 
+=======
+    var id = req.body.id;
+    var followerId = req.body.followerId;
+
+    console.log('This is the id', id);
+
+>>>>>>> d48a7356412f0a93f1fb7ff11a0c179facbb8ef5
     User.findById(id)
         .exec(function(err, user) {
             if (err) {
@@ -152,6 +182,7 @@ UserController.prototype.addFollower = function(req, res) {
                 });
             }
 
+<<<<<<< HEAD
             var userTwoIndex = user.following.indexOf(followerId);
 
             if (userTwoIndex === -1) {
@@ -163,6 +194,20 @@ UserController.prototype.addFollower = function(req, res) {
 
             // Removes user Two
             user.following.splice(userTwoIndex, 1);
+=======
+            // Adds user to following list
+            user.following.push(followerId);
+            user.save(function(err, user) {
+                if (err) {
+                    console.log('Error in addFollower():', err);
+                }
+
+                return res.json({
+                    status: true,
+                    object: user
+                });
+            });
+>>>>>>> d48a7356412f0a93f1fb7ff11a0c179facbb8ef5
         });
 };
 
@@ -317,7 +362,10 @@ passport.use('signup', new LocalStrategy({
 
             var newUser = new User();
 
+<<<<<<< HEAD
             newUser.name = req.body.name;
+=======
+>>>>>>> d48a7356412f0a93f1fb7ff11a0c179facbb8ef5
             newUser.username = req.body.username;
             newUser.password = userUtils.createHash(password);
             newUser.email = email;

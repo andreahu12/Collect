@@ -37,7 +37,11 @@ router.post('/user/add-follower', userController.addFollower);
 router.post('/user/remove-follower', userController.removeFollower);
 router.get('/user/get-followers', userController.getFollowers);
 router.get('/user/get-following', userController.getFollowing);
+<<<<<<< HEAD
 router.get('/get-all-users', userController.getAllUsers);
+=======
+
+>>>>>>> d48a7356412f0a93f1fb7ff11a0c179facbb8ef5
 // DB
 var db = mongoose.connect(config.mongoDB, function(err) {
 	if (err) { console.error('Could not establish connection with MongoDB' + err); }
