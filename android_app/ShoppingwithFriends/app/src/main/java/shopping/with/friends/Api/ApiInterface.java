@@ -7,6 +7,7 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Query;
 
 /**
  * Created by Ryan Brooks on 2/23/15.
@@ -42,4 +43,5 @@ public interface ApiInterface {
     void getAllUsers(Callback<JsonObject> callback);
 
     @GET("/api/user/get-user")
+    void getUser(@Query("id") String userId, Callback<JsonObject> callback);
 }
