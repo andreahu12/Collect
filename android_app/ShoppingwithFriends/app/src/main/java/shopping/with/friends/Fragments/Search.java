@@ -55,7 +55,7 @@ public class Search extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new HttpAsyncTask().execute("http://128.61.76.103:3000/api/get-all-users");
+                new HttpAsyncTask().execute("http://128.61.77.93:3000/api/get-all-users");
             }
         });
 

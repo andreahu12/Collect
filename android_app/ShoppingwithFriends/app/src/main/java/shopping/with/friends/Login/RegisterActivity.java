@@ -82,7 +82,7 @@ public class RegisterActivity extends ActionBarActivity {
                 } else if (!passwordET.getText().toString().trim().equals(passwordConfirmET.getText().toString().trim())) {
                     Toast.makeText(RegisterActivity.this, "Your passwords don't match!", Toast.LENGTH_SHORT).show();
                 } else {
-                    new HttpAsyncTask().execute("http://128.61.76.103:3000/api/user/signup"); //TODO: CHANGE THIS BEFORE USE!!!!!!!!
+                    new HttpAsyncTask().execute("http://" + R.string.server_address +  "/api/user/signup"); //TODO: CHANGE THIS BEFORE USE!!!!!!!!
                 }
             }
         });

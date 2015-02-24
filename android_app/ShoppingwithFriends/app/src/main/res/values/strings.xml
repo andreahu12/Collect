@@ -18,6 +18,8 @@
     <string name="profile_followers">Followers</string>
     <string name="profile_following">Following</string>
 
+    <string name="server_address">http://128.61.77.93:3000</string>
+
     <string-array name="ma_slide_drawer_items">
         <item >Main Feed</item>
         <item >Profile</item>

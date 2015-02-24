@@ -15,6 +15,9 @@ public class Profile {
     private ArrayList<Profile> followers;
     private ArrayList<Profile> following;
 
+    /**
+     * Profile Object that stores all user data
+     */
     public Profile() {
     }
 

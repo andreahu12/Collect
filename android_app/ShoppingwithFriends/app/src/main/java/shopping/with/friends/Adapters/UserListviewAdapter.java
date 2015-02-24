@@ -46,6 +46,11 @@ public class UserListviewAdapter extends BaseAdapter {
     private Profile userProfile;
     private Profile followingProfile;
 
+    /**
+     * ListView Adapter for each item that is in the user listview
+     * @param context
+     * @param users
+     */
     public UserListviewAdapter(Context context, ArrayList<Profile> users) {
         this.context = context;
         this.users = users;
