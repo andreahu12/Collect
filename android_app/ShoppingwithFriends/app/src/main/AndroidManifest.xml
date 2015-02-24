@@ -22,6 +22,12 @@
         </activity>
 
         <activity
+            android:name=".Login.LoginSelectorActivity"
+            android:label="@string/activity_login_label"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
             android:name=".Login.RegisterActivity"
             android:parentActivityName=".Login.LoginActivity"
             android:label="@string/activity_register_label"
@@ -50,7 +56,7 @@
         </activity>
 
         <activity
-            android:name=".Login.LoginSelectorActivity"
+            android:name=".SplashScreen"
             android:label="@string/activity_login_label"
             android:screenOrientation="portrait" >
             <intent-filter>

@@ -83,18 +83,39 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="0sp"
             android:singleLine="true"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
             android:textAppearance="@style/TextAppearance.FontAwesome"
             />
+
+        <RelativeLayout
+            android:layout_marginTop="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/al_remember_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_toRightOf="@+id/al_remember_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remember me"
+                android:layout_centerVertical="true"
+                android:textAppearance="@style/TextAppearance.FontPathNormal"
+                />
+
+        </RelativeLayout>
+
         <!-- Login button -->
         <Button
             android:id="@+id/al_login_button"
             android:layout_width="fill_parent"
             android:layout_height="45dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="Login"
             android:textColor="@color/white"
             android:textAppearance="@style/TextAppearance.FontPathNormal"

@@ -2,8 +2,10 @@ package shopping.with.friends;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -20,10 +22,10 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import shopping.with.friends.Activities.Followers;
+import shopping.with.friends.Activities.Following;
 import shopping.with.friends.Drawer.DrawerMenuAdapter;
 import shopping.with.friends.Drawer.DrawerMenuItem;
-import shopping.with.friends.Fragments.Followers;
-import shopping.with.friends.Fragments.Following;
 import shopping.with.friends.Fragments.MainFeed;
 import shopping.with.friends.Fragments.ProfileFragment;
 import shopping.with.friends.Fragments.Search;
@@ -42,19 +44,19 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private ActionBarDrawerToggle drawerToggle;
     private ListView drawerMenuListview;
     private DrawerMenuAdapter drawerMenuAdapter;
+    private SharedPreferences preferences;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    /**
-     * See loginActivity
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         toolbar = (Toolbar) findViewById(R.id.ma_toolbar);
         setSupportActionBar(toolbar);
@@ -100,10 +102,12 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 setFragment(2, WishList.class);
                 break;
             case 3:
-                setFragment(3, Following.class);
+                Intent followingIntent = new Intent(this, Following.class);
+                startActivity(followingIntent);
                 break;
             case 4:
-                setFragment(4, Followers.class);
+                Intent followersIntent = new Intent(this, Followers.class);
+                startActivity(followersIntent);
                 break;
             case 5:
                 setFragment(5, Search.class);
@@ -123,10 +127,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
     }
 
-    /**
-     * When using the ActionBarDrawerToggle, you must call it during
-     * onPostCreate() and onConfigurationChanged()...
-     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -168,12 +168,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         return result;
     }
 
-    /**
-     * Creates a menu in the top right corner of the ActionBar
-     * We do not need to worry about anything in this method other
-     * than the inflate(R.menu.main_menu). This is an xml file under the
-     * res folder "menu" where we can customize the menu and what is in it
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -181,10 +175,6 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         return true;
     }
 
-    /**
-     * This is the handler for the menu. Gets the items and their id's in the
-     * menu xml file and handles clicks to those items.
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -197,6 +187,10 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             case R.id.action_settings:
                 return true;
             case R.id.ma_action_logout:
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.remove(getString(R.string.email_pref));
+                editor.remove(getString(R.string.password_pref));
+                editor.commit();
                 Intent i = new Intent(this, LoginSelectorActivity.class);
                 startActivity(i);
                 finish();

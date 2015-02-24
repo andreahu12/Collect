@@ -101,8 +101,9 @@ public class UserListviewAdapter extends BaseAdapter {
                 mHolder.followButton.setEnabled(false);
                 mHolder.followButton.setText("Following");
                 followingProfile = profile;
-                userProfile.addFollowing(profile);
-                //new HttpAsyncTask().execute("http://128.61.76.103:3000/api/user/follow");
+                new HttpAsyncTask().execute("http://" + context.getString(R.string.server_address) + "/api/user/add-follower");
+                new HttpAsyncTask().execute("http://" + context.getString(R.string.server_address) + "/api/user/add-following");
+
             }
         });
 

@@ -24,7 +24,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.+' // Support Library
     compile 'uk.co.chrisjenx:calligraphy:2.0.1' // Custom Fonts
     compile 'de.hdodenhof:circleimageview:1.2.1' // Circle Imageview
-    compile 'com.squareup.okhttp:okhttp:2.0.0' // Retrofit
-    compile 'com.squareup.retrofit:retrofit:1.7.0' // Retrofit
-    compile 'com.google.code.gson:gson:2.3' // Retrofit
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
+
 }

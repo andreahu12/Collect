@@ -136,8 +136,6 @@ UserController.prototype.addFollower = function(req, res) {
     var id = req.body.id;
     var followerId = req.body.followerId;
 
-    console.log('This is the id', id);
-
     User.findById(id)
         .exec(function(err, user) {
             if (err) {
@@ -156,6 +154,7 @@ UserController.prototype.addFollower = function(req, res) {
 
             // Adds user to following list
             user.following.push(followerId);
+
             user.save(function(err, user) {
                 if (err) {
                     console.log('Error in addFollower():', err);
@@ -320,6 +319,7 @@ passport.use('signup', new LocalStrategy({
 
             var newUser = new User();
 
+            newUser.name = req.body.name;
             newUser.username = req.body.username;
             newUser.password = userUtils.createHash(password);
             newUser.email = email;
