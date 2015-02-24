@@ -93,7 +93,7 @@ UserController.prototype.follow = function(req, res) {
                 });
             }
 
-            user.following.addToSet(followingId);
+            user.following.push(followingId);
         });
 };
 
@@ -117,7 +117,18 @@ UserController.prototype.unFollow = function(req, res) {
                 });
             }
 
+            // Add following
             user.following.addToSet(followingId);
+            user.save(function(err, user) {
+                if (err) {
+                    console.log('Error in addFollower():', err);
+                }
+
+                return res.json({
+                    status: true,
+                    object: user
+                });
+            });
         });
 };
 
