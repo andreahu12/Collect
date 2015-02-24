@@ -38,6 +38,8 @@ router.post('/user/remove-follower', userController.removeFollower);
 router.post('/user/get-followers', userController.getFollowers);
 router.post('/user/get-following', userController.getFollowing);
 router.get('/user/get-all-users', userController.getAllUsers);
+// General User
+router.get('/user/get', userController.get);
 
 // DB
 var db = mongoose.connect(config.mongoDB, function(err) {

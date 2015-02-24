@@ -72,6 +72,30 @@ UserController.prototype.getFollowing = function(req, res) {
         });
 };
 
+UserController.prototype.get = function(req, res) {
+    User.findById(req.query.id)
+        .exec(function(err, user) {
+            if (err) {
+                return res.json({
+                    status: false,
+                    message: 'An unknown error occurred'
+                });
+            }
+
+            if (!user) {
+                return res.json({
+                    status: false,
+                    message: 'Could not find user'
+                });
+            }
+
+            return res.json({
+                status: true,
+                user: user
+            });
+        });
+};
+
 // Follows user
 UserController.prototype.follow = function(req, res) {
     var id = req.body.user_id;

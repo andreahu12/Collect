@@ -40,4 +40,6 @@ public interface ApiInterface {
 
     @GET("/api/user/get-all-users")
     void getAllUsers(Callback<JsonObject> callback);
+
+    @GET("/api/user/get-user")
 }
