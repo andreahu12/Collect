@@ -113,6 +113,9 @@ public class RegisterActivity extends ActionBarActivity {
                                     profile.setPassword(mainObject.getString("password"));
                                     profile.setUsername(mainObject.getString("username"));
                                     profile.setName(mainObject.getString("name"));
+
+                                    //TODO: Add followers/following lists
+
                                     MainApplication mainApplication = (MainApplication) getApplicationContext();
                                     mainApplication.setProfile(profile);
 

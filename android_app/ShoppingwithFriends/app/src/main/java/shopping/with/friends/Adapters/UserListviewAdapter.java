@@ -11,10 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.JsonObject;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -35,9 +38,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import shopping.with.friends.Api.ApiInterface;
 import shopping.with.friends.MainApplication;
 import shopping.with.friends.Objects.Profile;
 import shopping.with.friends.R;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class UserListviewAdapter extends BaseAdapter {
 
@@ -83,7 +92,7 @@ public class UserListviewAdapter extends BaseAdapter {
             mHolder = new Holder();
             mHolder.name = (TextView) child.findViewById(R.id.lvu_name_textview);
             mHolder.username = (TextView) child.findViewById(R.id.lvu_username_textview);
-            mHolder.followButton = (Button) child.findViewById(R.id.lvu_follow_button);
+            mHolder.followButton = (ImageView) child.findViewById(R.id.lvu_follow_button);
             child.setTag(mHolder);
         } else {
             mHolder = (Holder) child.getTag();
@@ -91,102 +100,58 @@ public class UserListviewAdapter extends BaseAdapter {
 
         mHolder.name.setText(profile.getName());
         mHolder.username.setText(profile.getUsername());
-        if (userProfile.getFollowing().contains(profile)) { //TODO: Fix this to work properly
+        if (userProfile.getFollowing().contains(profile.getId())) { //TODO: Fix this to work properly
             mHolder.followButton.setEnabled(false);
+            mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.following_check));
         }
 
         mHolder.followButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mHolder.followButton.setEnabled(false);
-                mHolder.followButton.setText("Following");
                 followingProfile = profile;
-                new HttpAsyncTask().execute("http://" + context.getString(R.string.server_address) + "/api/user/add-follower");
-                new HttpAsyncTask().execute("http://" + context.getString(R.string.server_address) + "/api/user/add-following");
 
+                RestAdapter restAdapter = new RestAdapter.Builder()
+                        .setEndpoint("http://" + context.getString(R.string.server_address))
+                        .build();
+
+                ApiInterface apiInterface = restAdapter.create(ApiInterface.class);
+                apiInterface.followUser(userProfile.getId(), followingProfile.getId(), new Callback<JsonObject>() {
+                    @Override
+                    public void success(JsonObject jsonObject, Response response) {
+                        Log.d("JSON follow", jsonObject.toString());
+                        mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.following_check));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("Error", error.toString());
+                        mHolder.followButton.setEnabled(true);
+                    }
+                });
+
+                apiInterface.addFollower(followingProfile.getId(), userProfile.getId(), new Callback<JsonObject>() {
+                    @Override
+                    public void success(JsonObject jsonObject, Response response) {
+                        Log.d("JSON add follower", jsonObject.toString());
+                        mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.following_check));
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("Error", error.toString());
+                        mHolder.followButton.setEnabled(true);
+                    }
+                });
             }
         });
 
         return child;
     }
 
-    public static String POST(String url, String userId, String followingId) {
-
-        // Declarations
-        InputStream inputStream;
-        String result = "";
-
-        try {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(url);
-
-            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("user_id", userId));
-            nameValuePairs.add(new BasicNameValuePair("followingId", followingId));
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-            HttpResponse httpResponse = httpclient.execute(httpPost);
-
-            inputStream = httpResponse.getEntity().getContent();
-            if(inputStream != null) {
-                result = convertInputStreamToString(inputStream);
-            } else {
-                result = "Did not work!"; // Error
-            }
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage()); // Error
-        }
-
-        return result;
-    }
-
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... urls) {
-
-            return POST(urls[0], userProfile.getId(), followingProfile.getId());
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                readJSONResponse(result);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
-
-    private void readJSONResponse(String result) throws JSONException {
-        Log.d("Follow", result);
-        JSONObject mainObject = new JSONObject(result);
-        boolean status = mainObject.getBoolean("status");
-        String message = mainObject.getString("message");
-        if (status) {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-        }
-    }
-
     public class Holder {
         TextView name;
         TextView username;
-        Button followButton;
+        ImageView followButton;
     }
 }

@@ -41,7 +41,7 @@ public class LoginActivity extends ActionBarActivity {
     private EditText emailET, passwordET;
     private Button loginButton, registerButton;
     private CheckBox rememberCheck;
-    private ArrayList<Profile> followerList, followingList;
+    private ArrayList<String> followersIdsList, followingIdsList;
     private boolean loginSuccessful;
     private SharedPreferences preferences;
 
@@ -56,8 +56,8 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        followerList = new ArrayList<>();
-        followingList = new ArrayList<>();
+        followersIdsList = new ArrayList<>();
+        followingIdsList = new ArrayList<>();
 
         emailET = (EditText) findViewById(R.id.al_email_et);
         passwordET = (EditText) findViewById(R.id.al_password_et);
@@ -97,28 +97,14 @@ public class LoginActivity extends ActionBarActivity {
                                     JSONArray followersArray = userObject.getJSONArray("followers");
                                     JSONArray followingArray = userObject.getJSONArray("following");
                                     for (int i = 0; i < followersArray.length(); i++) {
-                                        JSONObject user = followersArray.getJSONObject(i);
+                                        String userId = followersArray.getString(i);
 
-                                        Profile followerProfile = new Profile();
-                                        followerProfile.setId(user.getString("_id"));
-                                        followerProfile.setEmail(user.getString("email"));
-                                        followerProfile.setPassword(user.getString("password"));
-                                        followerProfile.setUsername(user.getString("username"));
-                                        followerProfile.setName(user.getString("name"));
-
-                                        followerList.add(followerProfile);
+                                        followersIdsList.add(userId);
                                     }
                                     for (int i = 0; i < followingArray.length(); i++) {
-                                        JSONObject user = followingArray.getJSONObject(i);
+                                        String userId = followingArray.getString(i);
 
-                                        Profile followingProfile = new Profile();
-                                        followingProfile.setId(user.getString("_id"));
-                                        followingProfile.setEmail(user.getString("email"));
-                                        followingProfile.setPassword(user.getString("password"));
-                                        followingProfile.setUsername(user.getString("username"));
-                                        followingProfile.setName(user.getString("name"));
-
-                                        followingList.add(followingProfile);
+                                        followingIdsList.add(userId);
                                     }
                                     Profile profile = new Profile();
                                     profile.setId(userObject.getString("_id"));
@@ -126,8 +112,8 @@ public class LoginActivity extends ActionBarActivity {
                                     profile.setPassword(userObject.getString("password"));
                                     profile.setUsername(userObject.getString("username"));
                                     profile.setName(userObject.getString("name"));
-                                    profile.setFollowers(followerList);
-                                    profile.setFollowing(followerList);
+                                    profile.setFollowers(followersIdsList);
+                                    profile.setFollowing(followingIdsList);
 
                                     MainApplication mainApplication = (MainApplication) getApplicationContext();
                                     mainApplication.setProfile(profile);

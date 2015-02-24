@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.gson.JsonObject;
+import com.squareup.okhttp.Response;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -25,7 +28,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import shopping.with.friends.Adapters.UserListviewAdapter;
+import shopping.with.friends.Api.ApiInterface;
 import shopping.with.friends.Objects.Profile;
 import shopping.with.friends.R;
 
@@ -55,87 +62,44 @@ public class Search extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new HttpAsyncTask().execute("http://" + getString(R.string.server_address) + "/api/get-all-users");
+                RestAdapter restAdapter = new RestAdapter.Builder()
+                        .setEndpoint("http://" + getString(R.string.server_address))
+                        .build();
+
+                ApiInterface apiInterface = restAdapter.create(ApiInterface.class);
+                apiInterface.getAllUsers(new Callback<JsonObject>() {
+                    @Override
+                    public void success(JsonObject jsonObject, retrofit.client.Response response) {
+                        Log.d("Json Object", jsonObject.toString());
+                        try {
+                            JSONObject mainObject = new JSONObject(jsonObject.toString());
+                            JSONArray userArray = mainObject.getJSONArray("users");
+                            for (int i = 0; i < userArray.length(); i++) {
+                                JSONObject user = userArray.getJSONObject(i);
+
+                                Profile profile = new Profile();
+                                profile.setId(user.getString("_id"));
+                                profile.setEmail(user.getString("email"));
+                                profile.setPassword(user.getString("password"));
+                                profile.setUsername(user.getString("username"));
+                                profile.setName(user.getString("name"));
+
+                                userList.add(profile);
+                            }
+                            UserListviewAdapter ulvw = new UserListviewAdapter(getActivity().getApplicationContext(), userList);
+                            userListView.setAdapter(ulvw);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d("Failure", error.getMessage());
+                    }
+                });
             }
         });
-
         return view;
-    }
-
-    public static String GET(String url) {
-
-        // Declarations
-        InputStream inputStream;
-        String result = "";
-
-        try {
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(url);
-            HttpResponse httpResponse = httpclient.execute(httpGet);
-            inputStream = httpResponse.getEntity().getContent();
-            if(inputStream != null) {
-                result = convertInputStreamToString(inputStream);
-            } else {
-                result = "Did not work!"; // Error
-            }
-        } catch (Exception e) {
-            Log.d("InputStream", e.getLocalizedMessage()); // Error
-        }
-
-        return result;
-    }
-
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected String doInBackground(String... urls) {
-
-            return GET(urls[0]);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            try {
-                readJSONResponse(result);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-        while((line = bufferedReader.readLine()) != null)
-            result += line;
-
-        inputStream.close();
-        return result;
-    }
-
-    private void readJSONResponse(String result) throws JSONException {
-        Log.d("JSON", result);
-        JSONObject mainObject = new JSONObject(result);
-        JSONArray userArray = mainObject.getJSONArray("users");
-        for (int i = 0; i < userArray.length(); i++) {
-            JSONObject user = userArray.getJSONObject(i);
-
-            Profile profile = new Profile();
-            profile.setId(user.getString("_id"));
-            profile.setEmail(user.getString("email"));
-            profile.setPassword(user.getString("password"));
-            profile.setUsername(user.getString("username"));
-            profile.setName(user.getString("name"));
-
-            userList.add(profile);
-        }
-        UserListviewAdapter ulvw = new UserListviewAdapter(getActivity().getApplicationContext(), userList);
-        userListView.setAdapter(ulvw);
     }
 }

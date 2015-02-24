@@ -12,8 +12,8 @@ public class Profile {
     private String email;
     private String password;
     private String username;
-    private ArrayList<Profile> followers;
-    private ArrayList<Profile> following;
+    private ArrayList<String> followersIds;
+    private ArrayList<String> followingIds;
 
     /**
      * Profile Object that stores all user data
@@ -30,30 +30,30 @@ public class Profile {
     }
 
     public Profile(String id, String name, String email, String password, String username,
-                   ArrayList<Profile> followers, ArrayList<Profile> following) {
+                   ArrayList<String> followersIds, ArrayList<String> followingIds) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.username = username;
-        this.followers = followers;
-        this.following = following;
+        this.followersIds = followersIds;
+        this.followingIds = followingIds;
     }
 
-    public ArrayList<Profile> getFollowers() {
-        return followers;
+    public ArrayList<String> getFollowers() {
+        return followersIds;
     }
 
-    public void setFollowers(ArrayList<Profile> followers) {
-        this.followers = followers;
+    public void setFollowers(ArrayList<String> followers) {
+        this.followersIds = followers;
     }
 
-    public ArrayList<Profile> getFollowing() {
-        return following;
+    public ArrayList<String> getFollowing() {
+        return followingIds;
     }
 
-    public void setFollowing(ArrayList<Profile> following) {
-        this.following = following;
+    public void setFollowing(ArrayList<String> following) {
+        this.followingIds = following;
     }
 
     public String getUsername() {

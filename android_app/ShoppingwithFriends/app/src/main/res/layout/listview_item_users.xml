@@ -6,8 +6,8 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/lvu_profile_picture"
         android:layout_margin="15dp"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:src="@drawable/blank_profile"/>
 
     <RelativeLayout
@@ -26,6 +26,7 @@
             android:textSize="18dp"
             android:layout_below="@+id/fp_profile_picture"
             android:textAppearance="@style/TextAppearance.FontPathBold"
+            android:textStyle="bold"
             android:text="Profile Name"/>
 
         <TextView
@@ -41,15 +42,14 @@
 
     </RelativeLayout>
 
-    <Button
+    <ImageView
         android:id="@+id/lvu_follow_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
-        android:background="@drawable/selector_button_pink"
-        android:textAppearance="@style/TextAppearance.FontPathBold"
-        android:text="Follow"/>
+        android:clickable="true"
+        android:src="@drawable/follow_check"/>
 
 </RelativeLayout>

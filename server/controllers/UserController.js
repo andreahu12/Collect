@@ -20,7 +20,7 @@ var UserController = function(User) {
 
 // Gets list of followers
 UserController.prototype.getFollowers = function(req, res) {
-    var id = req.query.user_id;
+    var id = req.body.user_id;
 
     User.findById(id)
         .exec(function(err, user) {
@@ -47,7 +47,7 @@ UserController.prototype.getFollowers = function(req, res) {
 
 // Gets list of following
 UserController.prototype.getFollowing = function(req, res) {
-    var id = req.query.user_id;
+    var id = req.body.user_id;
 
     User.findById(id)
         .exec(function(err, user) {
@@ -94,6 +94,17 @@ UserController.prototype.follow = function(req, res) {
             }
 
             user.following.push(followingId);
+
+            user.save(function(err, user) {
+                if (err) {
+                    console.log('Error in follow():', err);
+                }
+
+                return res.json({
+                    status: true,
+                    object: user
+                });
+            });
         });
 };
 
@@ -153,7 +164,7 @@ UserController.prototype.addFollower = function(req, res) {
             }
 
             // Adds user to following list
-            user.following.push(followerId);
+            user.followers.push(followerId);
 
             user.save(function(err, user) {
                 if (err) {

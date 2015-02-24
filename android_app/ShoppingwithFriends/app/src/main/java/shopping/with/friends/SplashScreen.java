@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -35,7 +34,7 @@ public class SplashScreen extends ActionBarActivity {
 
     private SharedPreferences preferences;
     private String emailPref, passwordPref;
-    private ArrayList<Profile> followerList, followingList;
+    private ArrayList<String> followersIdsList, followingIdsList;
     private boolean loginSuccessful;
 
     @Override
@@ -48,8 +47,8 @@ public class SplashScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        followerList = new ArrayList<>();
-        followingList = new ArrayList<>();
+        followersIdsList = new ArrayList<>();
+        followingIdsList = new ArrayList<>();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         emailPref = preferences.getString(getString(R.string.email_pref), null);
@@ -74,28 +73,14 @@ public class SplashScreen extends ActionBarActivity {
                             JSONArray followersArray = userObject.getJSONArray("followers");
                             JSONArray followingArray = userObject.getJSONArray("following");
                             for (int i = 0; i < followersArray.length(); i++) {
-                                JSONObject user = followersArray.getJSONObject(i);
+                                String userId = followersArray.getString(i);
 
-                                Profile followerProfile = new Profile();
-                                followerProfile.setId(user.getString("_id"));
-                                followerProfile.setEmail(user.getString("email"));
-                                followerProfile.setPassword(user.getString("password"));
-                                followerProfile.setUsername(user.getString("username"));
-                                followerProfile.setName(user.getString("name"));
-
-                                followerList.add(followerProfile);
+                                followersIdsList.add(userId);
                             }
                             for (int i = 0; i < followingArray.length(); i++) {
-                                JSONObject user = followingArray.getJSONObject(i);
+                                String userId = followingArray.getString(i);
 
-                                Profile followingProfile = new Profile();
-                                followingProfile.setId(user.getString("_id"));
-                                followingProfile.setEmail(user.getString("email"));
-                                followingProfile.setPassword(user.getString("password"));
-                                followingProfile.setUsername(user.getString("username"));
-                                followingProfile.setName(user.getString("name"));
-
-                                followingList.add(followingProfile);
+                                followingIdsList.add(userId);
                             }
                             Profile profile = new Profile();
                             profile.setId(userObject.getString("_id"));
@@ -103,8 +88,8 @@ public class SplashScreen extends ActionBarActivity {
                             profile.setPassword(userObject.getString("password"));
                             profile.setUsername(userObject.getString("username"));
                             profile.setName(userObject.getString("name"));
-                            profile.setFollowers(followerList);
-                            profile.setFollowing(followerList);
+                            profile.setFollowers(followersIdsList);
+                            profile.setFollowing(followingIdsList);
 
                             MainApplication mainApplication = (MainApplication) getApplicationContext();
                             mainApplication.setProfile(profile);

@@ -4,9 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ListView;
 
+import com.google.gson.JsonObject;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import shopping.with.friends.Adapters.UserListviewAdapter;
+import shopping.with.friends.Api.ApiInterface;
 import shopping.with.friends.MainApplication;
 import shopping.with.friends.Objects.Profile;
 import shopping.with.friends.R;
@@ -41,8 +49,26 @@ public class Following extends ActionBarActivity {
 
         followingListView = (ListView) findViewById(R.id.activity_following_listview);
 
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint("http://" + getString(R.string.server_address))
+                .build();
 
-        UserListviewAdapter ulvw = new UserListviewAdapter(this, profile.getFollowers());
-        followingListView.setAdapter(ulvw);
+        ApiInterface apiInterface = restAdapter.create(ApiInterface.class);
+        apiInterface.getFollowing(profile.getId(), new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                Log.d("JSON get-following", jsonObject.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("Failure", error.getMessage());
+
+            }
+        });
+
+
+        //UserListviewAdapter ulvw = new UserListviewAdapter(this, profile.getFollowers());
+        //followersListView.setAdapter(ulvw);
     }
 }
