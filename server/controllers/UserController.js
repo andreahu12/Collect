@@ -122,8 +122,10 @@ UserController.prototype.unFollow = function(req, res) {
 };
 
 UserController.prototype.addFollower = function(req, res) {
-    var id = req.body.user_id;
+    var id = req.body.id;
     var followerId = req.body.followerId;
+
+    console.log('This is the id', id);
 
     User.findById(id)
         .exec(function(err, user) {
@@ -141,17 +143,18 @@ UserController.prototype.addFollower = function(req, res) {
                 });
             }
 
-            var userTwoIndex = user.following.indexOf(followerId);
+            // Adds user to following list
+            user.following.push(followerId);
+            user.save(function(err, user) {
+                if (err) {
+                    console.log('Error in addFollower():', err);
+                }
 
-            if (userTwoIndex === -1) {
                 return res.json({
-                    status: false,
-                    message: 'User not following yet'
+                    status: true,
+                    object: user
                 });
-            }
-
-            // Removes user Two
-            user.following.splice(userTwoIndex, 1);
+            });
         });
 };
 
