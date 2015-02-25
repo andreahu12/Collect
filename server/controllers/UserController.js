@@ -20,7 +20,7 @@ var UserController = function(User) {
 
 // Gets list of followers
 UserController.prototype.getFollowers = function(req, res) {
-    var id = req.body.user_id;
+    var id = req.query.user_id;
 
     User.findById(id)
         .exec(function(err, user) {
@@ -47,7 +47,7 @@ UserController.prototype.getFollowers = function(req, res) {
 
 // Gets list of following
 UserController.prototype.getFollowing = function(req, res) {
-    var id = req.body.user_id;
+    var id = req.query.user_id;
 
     User.findById(id)
         .exec(function(err, user) {

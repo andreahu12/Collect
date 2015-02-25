@@ -35,8 +35,8 @@ router.post('/user/follow', userController.follow);
 router.post('/user/un-follow', userController.unFollow);
 router.post('/user/add-follower', userController.addFollower);
 router.post('/user/remove-follower', userController.removeFollower);
-router.post('/user/get-followers', userController.getFollowers);
-router.post('/user/get-following', userController.getFollowing);
+router.get('/user/get-followers', userController.getFollowers);
+router.get('/user/get-following', userController.getFollowing);
 router.get('/user/get-all-users', userController.getAllUsers);
 // General User
 router.get('/user/get', userController.get);

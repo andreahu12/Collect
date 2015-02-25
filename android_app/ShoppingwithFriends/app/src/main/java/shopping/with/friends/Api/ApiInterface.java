@@ -32,12 +32,12 @@ public interface ApiInterface {
     void followUser(@Field("user_id") String myId, @Field("followingId") String theirId, Callback<JsonObject> callback);
 
     @FormUrlEncoded
-    @POST("/api/user/get-followers")
-    void getFollowers(@Field("user_id") String id, Callback<JsonObject> callback);
+    @GET("/api/user/get-followers")
+    void getFollowers(@Query("user_id") String id, Callback<JsonObject> callback);
 
     @FormUrlEncoded
-    @POST("/api/user/get-following")
-    void getFollowing(@Field("user_id") String id, Callback<JsonObject> callback);
+    @GET("/api/user/get-following")
+    void getFollowing(@Query("user_id") String id, Callback<JsonObject> callback);
 
     @GET("/api/user/get-all-users")
     void getAllUsers(Callback<JsonObject> callback);
