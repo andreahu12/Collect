@@ -163,7 +163,7 @@ UserController.prototype.follow = function(req, res) {
 
                 return res.json({
                     status: true,
-                    object: user
+                    user: user
                 });
             });
         });
@@ -198,7 +198,7 @@ UserController.prototype.unFollow = function(req, res) {
 
                 return res.json({
                     status: true,
-                    object: user
+                    user: user
                 });
             });
         });
@@ -234,7 +234,7 @@ UserController.prototype.addFollower = function(req, res) {
 
                 return res.json({
                     status: true,
-                    object: user
+                    user: user
                 });
             });
         });
