@@ -11,6 +11,12 @@ import android.widget.ListView;
 
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -30,6 +36,7 @@ public class Followers extends ActionBarActivity {
     private Toolbar toolbar;
     private ListView followersListView;
     private Profile profile;
+    private ArrayList<Profile> followersList;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -41,12 +48,14 @@ public class Followers extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_followers);
-        MainApplication mainApplication = (MainApplication)this.getApplicationContext();
-        profile = mainApplication.getProfile();
+
+        profile = (Profile) getIntent().getExtras().getSerializable("profile");
+
+        followersList = new ArrayList<>();
 
         toolbar = (Toolbar) findViewById(R.id.activity_followers_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //TODO: <--- Fix this up
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         followersListView = (ListView) findViewById(R.id.activity_followers_listview);
 
@@ -59,6 +68,26 @@ public class Followers extends ActionBarActivity {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 Log.d("JSON get-followers", jsonObject.toString());
+                try {
+                    JSONObject mainObject = new JSONObject(jsonObject.toString());
+                    JSONArray userArray = mainObject.getJSONArray("followers");
+                    for (int i = 0; i < userArray.length(); i++) {
+                        JSONObject user = userArray.getJSONObject(i);
+
+                        Profile profile = new Profile();
+                        profile.setId(user.getString("_id"));
+                        profile.setEmail(user.getString("email"));
+                        profile.setPassword(user.getString("password"));
+                        profile.setUsername(user.getString("username"));
+                        profile.setName(user.getString("name"));
+
+                        followersList.add(profile);
+                    }
+                    UserListviewAdapter ulvw = new UserListviewAdapter(getApplicationContext(), followersList);
+                    followersListView.setAdapter(ulvw);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

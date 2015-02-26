@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,7 +30,7 @@ import shopping.with.friends.Activities.Following;
 import shopping.with.friends.Drawer.DrawerMenuAdapter;
 import shopping.with.friends.Drawer.DrawerMenuItem;
 import shopping.with.friends.Fragments.MainFeed;
-import shopping.with.friends.Fragments.ProfileFragment;
+import shopping.with.friends.Fragments.MyProfileFragment;
 import shopping.with.friends.Fragments.Search;
 import shopping.with.friends.Fragments.Settings;
 import shopping.with.friends.Fragments.WishList;
@@ -108,7 +107,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         profileRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFragment(1, ProfileFragment.class);
+                setFragment(1, MyProfileFragment.class);
             }
         });
 
@@ -127,17 +126,19 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 setFragment(0, MainFeed.class);
                 break;
             case 1:
-                setFragment(1, ProfileFragment.class);
+                setFragment(1, MyProfileFragment.class);
                 break;
             case 2:
                 setFragment(2, WishList.class);
                 break;
             case 3:
                 Intent followingIntent = new Intent(this, Following.class);
+                followingIntent.putExtra("user_id", userProfile.getId());
                 startActivity(followingIntent);
                 break;
             case 4:
                 Intent followersIntent = new Intent(this, Followers.class);
+                followersIntent.putExtra("user_id", userProfile.getId());
                 startActivity(followersIntent);
                 break;
             case 5:

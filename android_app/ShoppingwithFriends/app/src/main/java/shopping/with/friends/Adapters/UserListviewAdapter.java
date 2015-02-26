@@ -101,76 +101,145 @@ public class UserListviewAdapter extends BaseAdapter {
 
         mHolder.name.setText(profile.getName());
         mHolder.username.setText(profile.getUsername());
-        if (userProfile.getFollowing().contains(profile.getId())) { //TODO: Fix this to work properly
-            mHolder.followButton.setEnabled(false);
-            mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.following_check));
-        }
+        if (!userProfile.getFollowing().contains(profile.getId())) {
+            /**
+            * Follow
+            */
+            mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.follow_check));
+            mHolder.followButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mHolder.followButton.setEnabled(false);
+                    followingProfile = profile;
 
-        mHolder.followButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mHolder.followButton.setEnabled(false);
-                followingProfile = profile;
+                    RestAdapter restAdapter = new RestAdapter.Builder()
+                            .setEndpoint("http://" + context.getString(R.string.server_address))
+                            .build();
 
-                RestAdapter restAdapter = new RestAdapter.Builder()
-                        .setEndpoint("http://" + context.getString(R.string.server_address))
-                        .build();
+                    ApiInterface apiInterface = restAdapter.create(ApiInterface.class);
+                    apiInterface.followUser(userProfile.getId(), followingProfile.getId(), new Callback<JsonObject>() {
+                        @Override
+                        public void success(JsonObject jsonObject, Response response) {
+                            Log.d("JSON follow", jsonObject.toString());
+                            try {
+                                JSONObject mainObject = new JSONObject(jsonObject.toString());
+                                if (mainObject.getBoolean("status")) {
+                                    followersIdsList = new ArrayList<>();
+                                    followingIdsList = new ArrayList<>();
+                                    JSONObject userObject = mainObject.getJSONObject("user");
+                                    JSONArray followersArray = userObject.getJSONArray("followers");
+                                    JSONArray followingArray = userObject.getJSONArray("following");
+                                    for (int i = 0; i < followersArray.length(); i++) {
+                                        String userId = followersArray.getString(i);
 
-                ApiInterface apiInterface = restAdapter.create(ApiInterface.class);
-                apiInterface.followUser(userProfile.getId(), followingProfile.getId(), new Callback<JsonObject>() {
-                    @Override
-                    public void success(JsonObject jsonObject, Response response) {
-                        mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.following_check));
-                        Log.d("JSON follow", jsonObject.toString());
-                        try {
-                            JSONObject mainObject = new JSONObject(jsonObject.toString());
-                            if (mainObject.getBoolean("status")) {
-                                followersIdsList = new ArrayList<>();
-                                followingIdsList = new ArrayList<>();
-                                JSONObject userObject = mainObject.getJSONObject("user");
-                                JSONArray followersArray = userObject.getJSONArray("followers");
-                                JSONArray followingArray = userObject.getJSONArray("following");
-                                for (int i = 0; i < followersArray.length(); i++) {
-                                    String userId = followersArray.getString(i);
+                                        followersIdsList.add(userId);
+                                    }
+                                    for (int i = 0; i < followingArray.length(); i++) {
+                                        String userId = followingArray.getString(i);
 
-                                    followersIdsList.add(userId);
+                                        followingIdsList.add(userId);
+                                    }
+                                    userProfile.setFollowers(followersIdsList);
+                                    userProfile.setFollowing(followingIdsList);
                                 }
-                                for (int i = 0; i < followingArray.length(); i++) {
-                                    String userId = followingArray.getString(i);
 
-                                    followingIdsList.add(userId);
-                                }
-                                userProfile.setFollowers(followersIdsList);
-                                userProfile.setFollowing(followingIdsList);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.d("Error", error.toString());
-                        mHolder.followButton.setEnabled(true);
-                    }
-                });
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d("Error", error.toString());
+                            mHolder.followButton.setEnabled(true);
+                        }
+                    });
 
-                apiInterface.addFollower(followingProfile.getId(), userProfile.getId(), new Callback<JsonObject>() {
-                    @Override
-                    public void success(JsonObject jsonObject, Response response) {
-                        Log.d("JSON add follower", jsonObject.toString());
-                        mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.following_check));
-                    }
+                    apiInterface.addFollower(followingProfile.getId(), userProfile.getId(), new Callback<JsonObject>() {
+                        @Override
+                        public void success(JsonObject jsonObject, Response response) {
+                            Log.d("JSON add follower", jsonObject.toString());
+                            mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.following_check));
+                        }
 
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.d("Error", error.toString());
-                        mHolder.followButton.setEnabled(true);
-                    }
-                });
-            }
-        });
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d("Error", error.toString());
+                            mHolder.followButton.setEnabled(true);
+                        }
+                    });
+                }
+            });
+        } else {
+            /**
+             * Unfollow
+             */
+            mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.following_check));
+            mHolder.followButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mHolder.followButton.setEnabled(false);
+                    followingProfile = profile;
+
+                    RestAdapter restAdapter = new RestAdapter.Builder()
+                            .setEndpoint("http://" + context.getString(R.string.server_address))
+                            .build();
+
+                    ApiInterface apiInterface = restAdapter.create(ApiInterface.class);
+                    apiInterface.unFollowUser(userProfile.getId(), followingProfile.getId(), new Callback<JsonObject>() {
+                        @Override
+                        public void success(JsonObject jsonObject, Response response) {
+                            Log.d("JSON un-follow", jsonObject.toString());
+                            try {
+                                JSONObject mainObject = new JSONObject(jsonObject.toString());
+                                if (mainObject.getBoolean("status")) {
+                                    followersIdsList = new ArrayList<>();
+                                    followingIdsList = new ArrayList<>();
+                                    JSONObject userObject = mainObject.getJSONObject("user");
+                                    JSONArray followersArray = userObject.getJSONArray("followers");
+                                    JSONArray followingArray = userObject.getJSONArray("following");
+                                    for (int i = 0; i < followersArray.length(); i++) {
+                                        String userId = followersArray.getString(i);
+
+                                        followersIdsList.add(userId);
+                                    }
+                                    for (int i = 0; i < followingArray.length(); i++) {
+                                        String userId = followingArray.getString(i);
+
+                                        followingIdsList.add(userId);
+                                    }
+                                    userProfile.setFollowers(followersIdsList);
+                                    userProfile.setFollowing(followingIdsList);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d("Error", error.toString());
+                            mHolder.followButton.setEnabled(true);
+                        }
+                    });
+
+                    apiInterface.removeFollower(followingProfile.getId(), userProfile.getId(), new Callback<JsonObject>() {
+                        @Override
+                        public void success(JsonObject jsonObject, Response response) {
+                            Log.d("JSON remove follower", jsonObject.toString());
+                            mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.follow_check));
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            Log.d("Error", error.toString());
+                            mHolder.followButton.setEnabled(true);
+                        }
+                    });
+                }
+            });
+        }
 
         return child;
     }

@@ -28,14 +28,20 @@ public interface ApiInterface {
     void addFollower(@Field("id") String theirId, @Field("followerId") String myId, Callback<JsonObject> callback);
 
     @FormUrlEncoded
+    @POST("/api/user/remove-follower")
+    void removeFollower(@Field("user_id") String theirId, @Field("followerId") String myId, Callback<JsonObject> callback);
+
+    @FormUrlEncoded
     @POST("/api/user/follow") //Ex I follow someone else, they're added to my following
     void followUser(@Field("user_id") String myId, @Field("followingId") String theirId, Callback<JsonObject> callback);
 
     @FormUrlEncoded
+    @POST("/api/user/un-follow")
+    void unFollowUser(@Field("user_id") String myId, @Field("followingId") String theirId, Callback<JsonObject> callback);
+
     @GET("/api/user/get-followers")
     void getFollowers(@Query("user_id") String id, Callback<JsonObject> callback);
 
-    @FormUrlEncoded
     @GET("/api/user/get-following")
     void getFollowing(@Query("user_id") String id, Callback<JsonObject> callback);
 

@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,8 @@ public class ProfileActivity extends ActionBarActivity {
         usernameTextView = (TextView) findViewById(R.id.af_username_textview);
         followersButton = (Button) findViewById(R.id.af_followers_button);
         followingButton = (Button) findViewById(R.id.af_following_button);
+        followersButton.setEnabled(false);
+        followingButton.setEnabled(false);
 
         Intent intent = getIntent();
         user_id = intent.getExtras().getString("user_id");
@@ -71,6 +74,23 @@ public class ProfileActivity extends ActionBarActivity {
 
         getUserData(user_id);
 
+
+        followersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProfileActivity.this, Followers.class);
+                i.putExtra("profile", profile);
+                startActivity(i);
+            }
+        });
+        followingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ProfileActivity.this, Following.class);
+                i.putExtra("profile", profile);
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -116,6 +136,8 @@ public class ProfileActivity extends ActionBarActivity {
                             followersButton.setText(profile.getFollowers().size() + " Followers");
                         }
                         followingButton.setText(profile.getFollowing().size() + " Following");
+                        followersButton.setEnabled(true);
+                        followingButton.setEnabled(true);
                     } else {
                         Toast.makeText(ProfileActivity.this, "Error finding profile", Toast.LENGTH_SHORT).show();
                         finish();

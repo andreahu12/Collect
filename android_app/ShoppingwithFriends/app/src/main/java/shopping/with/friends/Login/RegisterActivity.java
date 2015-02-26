@@ -55,6 +55,7 @@ public class RegisterActivity extends ActionBarActivity {
     private CheckBox rememberCheck;
     private Button signUpButton;
     private String returnUsername;
+    private ArrayList<String> followersIdsList, followingIdsList;
     private SharedPreferences preferences;
 
     @Override
@@ -69,6 +70,9 @@ public class RegisterActivity extends ActionBarActivity {
         // TODO: Remove the actionbar
         //getActionBar().setDisplayHomeAsUpEnabled(true);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        followersIdsList = new ArrayList<>();
+        followingIdsList = new ArrayList<>();
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -107,14 +111,27 @@ public class RegisterActivity extends ActionBarActivity {
                                 returnUsername = mainObject.getString("username");
 
                                 if (returnUsername != null && returnUsername.equals(usernameET.getText().toString().trim())) {
+                                    JSONArray followersArray = mainObject.getJSONArray("followers");
+                                    JSONArray followingArray = mainObject.getJSONArray("following");
+                                    for (int i = 0; i < followersArray.length(); i++) {
+                                        String userId = followersArray.getString(i);
+
+                                        followersIdsList.add(userId);
+                                    }
+                                    for (int i = 0; i < followingArray.length(); i++) {
+                                        String userId = followingArray.getString(i);
+
+                                        followingIdsList.add(userId);
+                                    }
+
                                     Profile profile = new Profile();
                                     profile.setId(mainObject.getString("_id"));
                                     profile.setEmail(mainObject.getString("email"));
                                     profile.setPassword(mainObject.getString("password"));
                                     profile.setUsername(mainObject.getString("username"));
                                     profile.setName(mainObject.getString("name"));
-
-                                    //TODO: Add followers/following lists
+                                    profile.setFollowers(followersIdsList);
+                                    profile.setFollowing(followingIdsList);
 
                                     MainApplication mainApplication = (MainApplication) getApplicationContext();
                                     mainApplication.setProfile(profile);

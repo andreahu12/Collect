@@ -10,6 +10,12 @@ import android.widget.ListView;
 
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -28,6 +34,7 @@ public class Following extends ActionBarActivity {
 
     private Toolbar toolbar;
     private ListView followingListView;
+    private ArrayList<Profile> followingList;
     private Profile profile;
 
 
@@ -41,12 +48,14 @@ public class Following extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_following);
-        MainApplication mainApplication = (MainApplication)this.getApplicationContext();
-        profile = mainApplication.getProfile();
+
+        profile = (Profile) getIntent().getExtras().getSerializable("profile");
+
+        followingList = new ArrayList<>();
 
         toolbar = (Toolbar) findViewById(R.id.activity_following_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //TODO: <--- Fix this up
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         followingListView = (ListView) findViewById(R.id.activity_following_listview);
 
@@ -59,6 +68,26 @@ public class Following extends ActionBarActivity {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 Log.d("JSON get-following", jsonObject.toString());
+                try {
+                    JSONObject mainObject = new JSONObject(jsonObject.toString());
+                    JSONArray userArray = mainObject.getJSONArray("following");
+                    for (int i = 0; i < userArray.length(); i++) {
+                        JSONObject user = userArray.getJSONObject(i);
+
+                        Profile profile = new Profile();
+                        profile.setId(user.getString("_id"));
+                        profile.setEmail(user.getString("email"));
+                        profile.setPassword(user.getString("password"));
+                        profile.setUsername(user.getString("username"));
+                        profile.setName(user.getString("name"));
+
+                        followingList.add(profile);
+                    }
+                    UserListviewAdapter ulvw = new UserListviewAdapter(getApplicationContext(), followingList);
+                    followingListView.setAdapter(ulvw);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

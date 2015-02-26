@@ -36,6 +36,7 @@ import retrofit.RetrofitError;
 import shopping.with.friends.Activities.ProfileActivity;
 import shopping.with.friends.Adapters.UserListviewAdapter;
 import shopping.with.friends.Api.ApiInterface;
+import shopping.with.friends.MainApplication;
 import shopping.with.friends.Objects.Profile;
 import shopping.with.friends.R;
 
@@ -47,6 +48,7 @@ public class Search extends Fragment {
     private Button searchButton;
     private ListView userListView;
     private ArrayList<Profile> userList;
+    private Profile userProfile;
 
 
     public Search() {
@@ -57,6 +59,10 @@ public class Search extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+
+        MainApplication mainApplication = (MainApplication) getActivity().getApplicationContext();
+        userProfile = mainApplication.getProfile();
+
         userList = new ArrayList<>();
 
         userListView = (ListView) view.findViewById(R.id.sf_search_listview);
@@ -65,6 +71,7 @@ public class Search extends Fragment {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                userList.clear();
                 RestAdapter restAdapter = new RestAdapter.Builder()
                         .setEndpoint("http://" + getString(R.string.server_address))
                         .build();
@@ -87,7 +94,9 @@ public class Search extends Fragment {
                                 profile.setUsername(user.getString("username"));
                                 profile.setName(user.getString("name"));
 
-                                userList.add(profile);
+                                if (!userProfile.getId().equals(profile.getId())) {
+                                    userList.add(profile);
+                                }
                             }
                             UserListviewAdapter ulvw = new UserListviewAdapter(getActivity().getApplicationContext(), userList);
                             userListView.setAdapter(ulvw);

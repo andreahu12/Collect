@@ -18,7 +18,7 @@ import shopping.with.friends.R;
 /**
  * Created by Ryan Brooks on 2/4/15.
  */
-public class ProfileFragment extends Fragment {
+public class MyProfileFragment extends Fragment {
 
     private Profile profile;
     private MainApplication mainApplication;
@@ -27,7 +27,7 @@ public class ProfileFragment extends Fragment {
     private Button followersButton;
     private Button followingButton;
 
-    public ProfileFragment() {
+    public MyProfileFragment() {
     }
 
     @Override
@@ -61,6 +61,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), Followers.class);
+                i.putExtra("profile", profile);
                 startActivity(i);
             }
         });
@@ -69,6 +70,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), Following.class);
+                i.putExtra("profile", profile);
                 startActivity(i);
             }
         });

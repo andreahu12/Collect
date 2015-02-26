@@ -1,11 +1,15 @@
 package shopping.with.friends.Objects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Ryan Brooks on 2/19/15.
  */
-public class Profile {
+public class Profile implements Serializable {
 
     private String id;
     private String name;
