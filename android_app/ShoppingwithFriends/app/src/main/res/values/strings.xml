@@ -17,6 +17,7 @@
     <string name="activity_register_label">Make an Account</string>
     <string name="profile_followers">Followers</string>
     <string name="profile_following">Following</string>
+    <string name="profile_activity">Profile</string>
 
     <string name="server_address">128.61.77.93:3000</string>
 

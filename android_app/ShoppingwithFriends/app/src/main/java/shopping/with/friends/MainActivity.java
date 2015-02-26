@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private ActionBarDrawerToggle drawerToggle;
     private ListView drawerMenuListview;
     private DrawerMenuAdapter drawerMenuAdapter;
+    private LinearLayout drawerLinearLayout;
     private SharedPreferences preferences;
 
     @Override
@@ -61,7 +63,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         toolbar = (Toolbar) findViewById(R.id.ma_toolbar);
         setSupportActionBar(toolbar);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.ma_drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.ma_drawer_wrapper);
+        drawerLinearLayout = (LinearLayout) findViewById(R.id.ma_drawer_main_layout);
         drawerMenuListview = (ListView) findViewById(R.id.ma_drawer_menu_listview);
 
         List<DrawerMenuItem> menuItems = generateDrawerMenuItems();
@@ -120,8 +123,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(drawerMenuListview)) {
-            drawerLayout.closeDrawer(drawerMenuListview);
+        if (drawerLayout.isDrawerOpen(drawerLinearLayout)) {
+            drawerLayout.closeDrawer(drawerLinearLayout);
         } else {
             super.onBackPressed();
         }
@@ -149,7 +152,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             fragmentTransaction.commit();
 
             drawerMenuListview.setItemChecked(position, true);
-            drawerLayout.closeDrawer(drawerMenuListview);
+            drawerLayout.closeDrawer(drawerLinearLayout);
             drawerMenuListview.invalidateViews();
         }
         catch (Exception ex){

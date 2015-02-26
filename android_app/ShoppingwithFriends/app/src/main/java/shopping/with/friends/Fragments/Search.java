@@ -1,5 +1,6 @@
 package shopping.with.friends.Fragments;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -31,6 +33,7 @@ import java.util.ArrayList;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import shopping.with.friends.Activities.ProfileActivity;
 import shopping.with.friends.Adapters.UserListviewAdapter;
 import shopping.with.friends.Api.ApiInterface;
 import shopping.with.friends.Objects.Profile;
@@ -100,6 +103,18 @@ public class Search extends Fragment {
                 });
             }
         });
+
+        userListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Profile clickedProfile = userList.get(position);
+                Intent i = new Intent(getActivity(), ProfileActivity.class);
+                i.putExtra("user_id", clickedProfile.getId());
+                startActivity(i);
+            }
+        });
+
+
         return view;
     }
 }

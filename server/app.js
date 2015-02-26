@@ -39,7 +39,7 @@ router.get('/user/get-followers', userController.getFollowers);
 router.get('/user/get-following', userController.getFollowing);
 router.get('/user/get-all-users', userController.getAllUsers);
 // General User
-router.get('/user/get', userController.get);
+router.get('/user/get-user', userController.get);
 
 // DB
 var db = mongoose.connect(config.mongoDB, function(err) {
