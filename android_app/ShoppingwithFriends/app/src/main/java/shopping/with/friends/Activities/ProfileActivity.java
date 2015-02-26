@@ -3,9 +3,11 @@ package shopping.with.friends.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -108,7 +110,11 @@ public class ProfileActivity extends ActionBarActivity {
 
                         nameTextView.setText(profile.getName());
                         usernameTextView.setText("@" + profile.getUsername());
-                        followersButton.setText(profile.getFollowers().size() + " Followers");
+                        if (profile.getFollowers().size() == 1) {
+                            followersButton.setText(profile.getFollowers().size() + " Follower");
+                        } else {
+                            followersButton.setText(profile.getFollowers().size() + " Followers");
+                        }
                         followingButton.setText(profile.getFollowing().size() + " Following");
                     } else {
                         Toast.makeText(ProfileActivity.this, "Error finding profile", Toast.LENGTH_SHORT).show();
@@ -128,5 +134,16 @@ public class ProfileActivity extends ActionBarActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

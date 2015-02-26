@@ -50,7 +50,11 @@ public class ProfileFragment extends Fragment {
 
         nameTextView.setText(profile.getName());
         usernameTextView.setText("@" + profile.getUsername());
-        followersButton.setText(profile.getFollowers().size() + " Followers");
+        if (profile.getFollowers().size() == 1) {
+            followersButton.setText(profile.getFollowers().size() + " Follower");
+        } else {
+            followersButton.setText(profile.getFollowers().size() + " Followers");
+        }
         followingButton.setText(profile.getFollowing().size() + " Following");
 
         followersButton.setOnClickListener(new View.OnClickListener() {

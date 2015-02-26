@@ -54,6 +54,7 @@ public class UserListviewAdapter extends BaseAdapter {
     private Context context;
     private Profile userProfile;
     private Profile followingProfile;
+    private ArrayList<String> followersIdsList, followingIdsList;
 
     /**
      * ListView Adapter for each item that is in the user listview
@@ -119,8 +120,33 @@ public class UserListviewAdapter extends BaseAdapter {
                 apiInterface.followUser(userProfile.getId(), followingProfile.getId(), new Callback<JsonObject>() {
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
-                        Log.d("JSON follow", jsonObject.toString());
                         mHolder.followButton.setImageDrawable(context.getResources().getDrawable(R.drawable.following_check));
+                        Log.d("JSON follow", jsonObject.toString());
+                        try {
+                            JSONObject mainObject = new JSONObject(jsonObject.toString());
+                            if (mainObject.getBoolean("status")) {
+                                followersIdsList = new ArrayList<>();
+                                followingIdsList = new ArrayList<>();
+                                JSONObject userObject = mainObject.getJSONObject("user");
+                                JSONArray followersArray = userObject.getJSONArray("followers");
+                                JSONArray followingArray = userObject.getJSONArray("following");
+                                for (int i = 0; i < followersArray.length(); i++) {
+                                    String userId = followersArray.getString(i);
+
+                                    followersIdsList.add(userId);
+                                }
+                                for (int i = 0; i < followingArray.length(); i++) {
+                                    String userId = followingArray.getString(i);
+
+                                    followingIdsList.add(userId);
+                                }
+                                userProfile.setFollowers(followersIdsList);
+                                userProfile.setFollowing(followingIdsList);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override

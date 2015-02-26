@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.google.gson.JsonObject;
@@ -70,5 +71,16 @@ public class Following extends ActionBarActivity {
 
         //UserListviewAdapter ulvw = new UserListviewAdapter(this, profile.getFollowers());
         //followersListView.setAdapter(ulvw);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

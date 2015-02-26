@@ -72,4 +72,15 @@ public class Followers extends ActionBarActivity {
         //UserListviewAdapter ulvw = new UserListviewAdapter(this, profile.getFollowers());
         //followersListView.setAdapter(ulvw);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

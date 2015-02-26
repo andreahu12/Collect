@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,7 @@ import shopping.with.friends.Fragments.Search;
 import shopping.with.friends.Fragments.Settings;
 import shopping.with.friends.Fragments.WishList;
 import shopping.with.friends.Login.LoginSelectorActivity;
+import shopping.with.friends.Objects.Profile;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -45,8 +49,12 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private ActionBarDrawerToggle drawerToggle;
     private ListView drawerMenuListview;
     private DrawerMenuAdapter drawerMenuAdapter;
-    private LinearLayout drawerLinearLayout;
+    private RelativeLayout drawerLinearLayout;
     private SharedPreferences preferences;
+    private TextView drawerProfileName, drawerProfileUsername;
+    private MainApplication mainApplication;
+    private Profile userProfile;
+    private RelativeLayout profileRelativeLayout;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -63,9 +71,15 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         toolbar = (Toolbar) findViewById(R.id.ma_toolbar);
         setSupportActionBar(toolbar);
 
+        mainApplication = (MainApplication) getApplicationContext();
+        userProfile = mainApplication.getProfile();
+
         drawerLayout = (DrawerLayout) findViewById(R.id.ma_drawer_wrapper);
-        drawerLinearLayout = (LinearLayout) findViewById(R.id.ma_drawer_main_layout);
+        drawerLinearLayout = (RelativeLayout) findViewById(R.id.ma_drawer_main_layout);
         drawerMenuListview = (ListView) findViewById(R.id.ma_drawer_menu_listview);
+        drawerProfileName = (TextView) findViewById(R.id.am_drawer_name_textview);
+        drawerProfileUsername = (TextView) findViewById(R.id.am_drawer_username_textview);
+        profileRelativeLayout = (RelativeLayout) findViewById(R.id.drawer_profile_layout);
 
         List<DrawerMenuItem> menuItems = generateDrawerMenuItems();
         drawerMenuAdapter = new DrawerMenuAdapter(getApplicationContext(), menuItems);
@@ -86,6 +100,20 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         };
 
         drawerLayout.setDrawerListener(drawerToggle);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            profileRelativeLayout.setBackground(getResources().getDrawable(R.drawable.selector_button_blue_ripple));
+        }
+
+        profileRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFragment(1, ProfileFragment.class);
+            }
+        });
+
+        drawerProfileName.setText(userProfile.getName());
+        drawerProfileUsername.setText("@" + userProfile.getUsername());
 
         if (savedInstanceState == null) {
             setFragment(0, MainFeed.class);
@@ -182,6 +210,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         int id = item.getItemId();
         switch (id) {
             case R.id.action_settings:
+                setFragment(6, Settings.class);
                 return true;
             case R.id.ma_action_logout:
                 SharedPreferences.Editor editor = preferences.edit();
