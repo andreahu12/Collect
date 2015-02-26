@@ -11,9 +11,9 @@ import shopping.with.friends.R;
 /**
  * Created by Ryan Brooks on 2/4/15.
  */
-public class WishList extends Fragment {
+public class MyCollections extends Fragment {
 
-    public WishList() {
+    public MyCollections() {
         // Required empty public constructor
     }
     
@@ -21,6 +21,6 @@ public class WishList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wishlist, container, false);
+        return inflater.inflate(R.layout.fragment_my_collections, container, false);
     }
 }

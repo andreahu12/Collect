@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    tools:context="shopping.with.friends.Fragments.WishList">
+    tools:context="shopping.with.friends.Fragments.MyCollections">
 
 
     <TextView
@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textColor="@color/main_blue"
-        android:text="WishList Fragment" />
+        android:text="My Collections" />
 
 
 </FrameLayout>

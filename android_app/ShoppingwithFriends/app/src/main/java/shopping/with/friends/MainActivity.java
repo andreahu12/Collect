@@ -30,10 +30,10 @@ import shopping.with.friends.Activities.Following;
 import shopping.with.friends.Drawer.DrawerMenuAdapter;
 import shopping.with.friends.Drawer.DrawerMenuItem;
 import shopping.with.friends.Fragments.MainFeed;
+import shopping.with.friends.Fragments.MyCollections;
 import shopping.with.friends.Fragments.MyProfileFragment;
 import shopping.with.friends.Fragments.Search;
 import shopping.with.friends.Fragments.Settings;
-import shopping.with.friends.Fragments.WishList;
 import shopping.with.friends.Login.LoginSelectorActivity;
 import shopping.with.friends.Objects.Profile;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -129,16 +129,16 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 setFragment(1, MyProfileFragment.class);
                 break;
             case 2:
-                setFragment(2, WishList.class);
+                setFragment(2, MyCollections.class);
                 break;
             case 3:
                 Intent followingIntent = new Intent(this, Following.class);
-                followingIntent.putExtra("user_id", userProfile.getId());
+                followingIntent.putExtra("profile", userProfile);
                 startActivity(followingIntent);
                 break;
             case 4:
                 Intent followersIntent = new Intent(this, Followers.class);
-                followersIntent.putExtra("user_id", userProfile.getId());
+                followersIntent.putExtra("profile", userProfile);
                 startActivity(followersIntent);
                 break;
             case 5:
