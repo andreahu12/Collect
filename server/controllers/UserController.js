@@ -21,6 +21,7 @@ var UserController = function(User) {
 // Gets list of followers
 UserController.prototype.getFollowers = function(req, res) {
     var id = req.query.user_id;
+    var followers = [];
 
     User.findById(id)
         .exec(function(err, user) {
@@ -38,16 +39,35 @@ UserController.prototype.getFollowers = function(req, res) {
                 });
             }
 
-            return res.json({
-                status: true,
-                followers: user.followers
+            // Loops through all followers and pushes user object into
+            // followers
+            async.each(user.followers, function(follower, callback) {
+                User.findById(follower)
+                    .exec(function(err, user) {
+                        followers.push(user);
+                        callback();
+                    });
+            }, function(err) {
+                if (err) {
+                    return res.json({
+                        status: false,
+                        message: 'An unknown error occurred'
+                    });
+                }
+
+                return res.json({
+                    status: true,
+                    followers: followers
+                });
             });
         });
 };
 
+
 // Gets list of following
 UserController.prototype.getFollowing = function(req, res) {
     var id = req.query.user_id;
+    var following = [];
 
     User.findById(id)
         .exec(function(err, user) {
@@ -65,9 +85,26 @@ UserController.prototype.getFollowing = function(req, res) {
                 });
             }
 
-            return res.json({
-                status: true,
-                following: user.following
+            // Loops through all following and pushes user object into
+            // followers
+            async.each(user.following, function(follow, callback) {
+                User.findById(follow) // Err I don't know what else to name it >.>
+                    .exec(function(err, user) {
+                        following.push(user);
+                        callback();
+                    });
+            }, function(err) {
+                if (err) {
+                    return res.json({
+                        status: false,
+                        message: 'An unknown error occurred'
+                    });
+                }
+
+                return res.json({
+                    status: true,
+                    following: following
+                });
             });
         });
 };
