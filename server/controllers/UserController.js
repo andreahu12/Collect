@@ -189,11 +189,21 @@ UserController.prototype.unFollow = function(req, res) {
                 });
             }
 
-            // Add following
-            user.following.addToSet(followingId);
+            var userTwoIndex = user.following.indexOf(followingId);
+
+            if (userTwoIndex === -1) {
+                return res.json({
+                    status: false,
+                    message: 'User not following this account'
+                });
+            }
+
+            // Removes user Two
+            user.following.splice(userTwoIndex, 1);
+
             user.save(function(err, user) {
                 if (err) {
-                    console.log('Error in addFollower():', err);
+                    console.log('Error in unFollow():', err);
                 }
 
                 return res.json({
@@ -271,6 +281,17 @@ UserController.prototype.removeFollower = function(req, res) {
 
             // Removes user Two
             user.followers.splice(userTwoIndex, 1);
+
+            user.save(function(err, user) {
+                if (err) {
+                    console.log('Error in removeFollower():', err);
+                }
+
+                return res.json({
+                    status: true,
+                    object: user
+                });
+            });
         });
 };
 
