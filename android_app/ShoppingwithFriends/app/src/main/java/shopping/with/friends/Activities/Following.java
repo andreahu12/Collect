@@ -1,11 +1,14 @@
 package shopping.with.friends.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.JsonObject;
@@ -97,9 +100,15 @@ public class Following extends ActionBarActivity {
             }
         });
 
-
-        //UserListviewAdapter ulvw = new UserListviewAdapter(this, profile.getFollowers());
-        //followersListView.setAdapter(ulvw);
+        followingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Profile clickedProfile = followingList.get(position);
+                Intent i = new Intent(Following.this, ProfileActivity.class);
+                i.putExtra("user_id", clickedProfile.getId());
+                startActivity(i);
+            }
+        });
     }
 
     @Override

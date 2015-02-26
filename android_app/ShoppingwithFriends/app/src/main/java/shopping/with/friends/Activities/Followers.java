@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.JsonObject;
@@ -97,9 +99,15 @@ public class Followers extends ActionBarActivity {
             }
         });
 
-
-        //UserListviewAdapter ulvw = new UserListviewAdapter(this, profile.getFollowers());
-        //followersListView.setAdapter(ulvw);
+        followersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Profile clickedProfile = followersList.get(position);
+                Intent i = new Intent(Followers.this, ProfileActivity.class);
+                i.putExtra("user_id", clickedProfile.getId());
+                startActivity(i);
+            }
+        });
     }
 
     @Override
