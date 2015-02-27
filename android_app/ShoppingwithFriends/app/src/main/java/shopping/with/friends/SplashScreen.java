@@ -29,6 +29,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Ryan Brooks on 2/24/15.
+ * Splash screen for start of app to allow for persistence
  */
 public class SplashScreen extends ActionBarActivity {
 

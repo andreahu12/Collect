@@ -281,7 +281,6 @@ UserController.prototype.removeFollower = function(req, res) {
 
             // Removes user Two
             user.followers.splice(userTwoIndex, 1);
-
             user.save(function(err, user) {
                 if (err) {
                     console.log('Error in removeFollower():', err);
@@ -289,7 +288,7 @@ UserController.prototype.removeFollower = function(req, res) {
 
                 return res.json({
                     status: true,
-                    object: user
+                    user: user
                 });
             });
         });
