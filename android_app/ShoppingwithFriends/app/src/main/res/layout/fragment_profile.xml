@@ -11,6 +11,19 @@
         android:layout_width="fill_parent"
         android:layout_height="250dp">
 
+        <TextView
+            android:id="@+id/fp_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:textAppearance="@style/TextAppearance.FontAwesome"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:text="@string/fontawesome_edit_profile"
+            android:clickable="true"/>
+
         <ImageView
             android:id="@+id/fp_background_imageView"
             android:layout_width="fill_parent"

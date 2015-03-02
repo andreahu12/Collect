@@ -4,6 +4,7 @@
     <string name="app_name">Collect</string>
     <string name="app_name_all_caps">COLLECT</string>
     <string name="fontawesome_logo">&#xf02b;</string>
+    <string name="fontawesome_edit_profile">&#xf040;</string>
     <string name="username_hint">&#xf007;   username</string>
     <string name="password_hint">&#xf13e;   password</string>
     <string name="email_hint">&#xf003;   address@email.com</string>
@@ -18,8 +19,9 @@
     <string name="profile_followers">Followers</string>
     <string name="profile_following">Following</string>
     <string name="profile_activity">Profile</string>
+    <string name="edit_profile_activity">Edit Profile</string>
 
-    <string name="server_address">128.61.77.93:3000</string>
+    <string name="server_address">128.61.70.5:3000</string>
 
     <!-- Preferences -->
     <string name="email_pref">email</string>

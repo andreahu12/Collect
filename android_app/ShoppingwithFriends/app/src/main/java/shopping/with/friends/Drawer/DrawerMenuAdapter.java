@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import shopping.with.friends.Objects.DrawerMenuItem;
 import shopping.with.friends.R;
 
 /**

@@ -3,6 +3,8 @@ package shopping.with.friends.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ public class MyProfileFragment extends Fragment {
     private MainApplication mainApplication;
     private TextView nameTextView;
     private TextView usernameTextView;
+    private TextView editProfileIcon;
     private Button followersButton;
     private Button followingButton;
 
@@ -41,12 +44,13 @@ public class MyProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-
         profile = mainApplication.getProfile();
         nameTextView = (TextView) view.findViewById(R.id.fp_name_textview);
         usernameTextView = (TextView) view.findViewById(R.id.fp_username_textview);
+        editProfileIcon = (TextView) view.findViewById(R.id.fp_edit_profile);
         followersButton = (Button) view.findViewById(R.id.fp_followers_button);
         followingButton = (Button) view.findViewById(R.id.fp_following_button);
+
 
         nameTextView.setText(profile.getName());
         usernameTextView.setText("@" + profile.getUsername());
@@ -56,6 +60,15 @@ public class MyProfileFragment extends Fragment {
             followersButton.setText(profile.getFollowers().size() + " Followers");
         }
         followingButton.setText(profile.getFollowing().size() + " Following");
+
+        editProfileIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                EditProfile editProfile = new EditProfile();
+                fragmentManager.beginTransaction().add(R.id.ma_drawer_frame_container, editProfile).addToBackStack("profileBack").commit();
+            }
+        });
 
         followersButton.setOnClickListener(new View.OnClickListener() {
             @Override

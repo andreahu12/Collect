@@ -28,7 +28,7 @@ import java.util.List;
 import shopping.with.friends.Activities.Followers;
 import shopping.with.friends.Activities.Following;
 import shopping.with.friends.Drawer.DrawerMenuAdapter;
-import shopping.with.friends.Drawer.DrawerMenuItem;
+import shopping.with.friends.Objects.DrawerMenuItem;
 import shopping.with.friends.Fragments.MainFeed;
 import shopping.with.friends.Fragments.MyCollections;
 import shopping.with.friends.Fragments.MyProfileFragment;
@@ -183,8 +183,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             drawerMenuListview.setItemChecked(position, true);
             drawerLayout.closeDrawer(drawerLinearLayout);
             drawerMenuListview.invalidateViews();
-        }
-        catch (Exception ex){
+        } catch (Exception ex){
             Log.e("setFragment", ex.getMessage());
         }
     }

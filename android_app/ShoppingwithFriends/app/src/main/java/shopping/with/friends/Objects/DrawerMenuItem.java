@@ -1,4 +1,4 @@
-package shopping.with.friends.Drawer;
+package shopping.with.friends.Objects;
 
 /**
  * Created by Ryan Brooks on 2/4/15.
