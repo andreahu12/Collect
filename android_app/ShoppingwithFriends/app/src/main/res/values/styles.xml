@@ -4,6 +4,8 @@
         <item name="android:colorPrimary">@color/main_pink</item>
         <item name="android:colorPrimaryDark">@color/main_pink_dark</item>
         <item name="android:colorAccent">@color/main_pink</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="ToolbarTheme" parent="Theme.AppCompat.NoActionBar">

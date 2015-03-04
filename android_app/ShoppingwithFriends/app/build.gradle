@@ -24,7 +24,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.+' // Support Library
     compile 'uk.co.chrisjenx:calligraphy:2.0.1' // Custom Fonts
     compile 'de.hdodenhof:circleimageview:1.2.1' // Circle Imageview
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0' // Retrofit
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0' // Ok-http
+    compile 'com.squareup.okhttp:okhttp:2.0.0' // Ok-http
+    compile 'com.melnykov:floatingactionbutton:1.2.0' // FAB button
+    compile 'com.github.liuguangqiang.swipeback:library:0.3.0@aar' // Swipe to go back
 }

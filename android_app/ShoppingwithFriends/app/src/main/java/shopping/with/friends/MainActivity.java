@@ -233,6 +233,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 Intent i = new Intent(this, LoginSelectorActivity.class);
                 startActivity(i);
                 finish();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

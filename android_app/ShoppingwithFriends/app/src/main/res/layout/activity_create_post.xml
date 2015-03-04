@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.liuguangqiang.swipeback.SwipeBackLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/acp_swipeBackLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar_pink"
+            android:id="@+id/acp_toolbar"/>
+
+        <RelativeLayout
+            android:id="@+id/acp_content_layout"
+            android:layout_below="@+id/acp_toolbar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/main_blue">
+
+        </RelativeLayout>
+    </RelativeLayout>
+</com.liuguangqiang.swipeback.SwipeBackLayout>

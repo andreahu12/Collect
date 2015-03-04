@@ -148,11 +148,8 @@
                                 android:textAppearance="@style/TextAppearance.FontPathBold"
                                 android:text="FOLLOWERS"/>
                         </RelativeLayout>
-
                     </RelativeLayout>
                 </LinearLayout>
-
-
             </RelativeLayout>
 
             <ListView
@@ -166,9 +163,6 @@
                 android:dividerHeight="0dp"/>
 
         </RelativeLayout>
-
-
-
     </android.support.v4.widget.DrawerLayout>
 
 </LinearLayout>

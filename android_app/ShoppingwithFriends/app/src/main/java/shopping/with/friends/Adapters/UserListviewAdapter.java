@@ -244,7 +244,7 @@ public class UserListviewAdapter extends BaseAdapter {
         return child;
     }
 
-    public class Holder {
+    private class Holder {
         TextView name;
         TextView username;
         ImageView followButton;

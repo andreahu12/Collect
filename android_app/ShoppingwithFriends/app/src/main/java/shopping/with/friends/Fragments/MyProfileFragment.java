@@ -3,14 +3,13 @@ package shopping.with.friends.Fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import shopping.with.friends.Activities.EditProfile;
 import shopping.with.friends.Activities.Followers;
 import shopping.with.friends.Activities.Following;
 import shopping.with.friends.MainApplication;
@@ -64,9 +63,9 @@ public class MyProfileFragment extends Fragment {
         editProfileIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getFragmentManager();
-                EditProfile editProfile = new EditProfile();
-                fragmentManager.beginTransaction().add(R.id.ma_drawer_frame_container, editProfile).addToBackStack("profileBack").commit();
+                Intent i = new Intent(getActivity(), EditProfile.class);
+                i.putExtra("profile", profile);
+                startActivity(i);
             }
         });
 

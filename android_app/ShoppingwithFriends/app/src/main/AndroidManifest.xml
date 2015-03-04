@@ -63,9 +63,16 @@
         </activity>
 
         <activity
-            android:name=".Fragments.EditProfile"
+            android:name=".Activities.EditProfile"
             android:parentActivityName=".MainActivity"
             android:label="@string/edit_profile_activity"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
+            android:name=".Activities.CreatePost"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/create_profile_activity"
             android:screenOrientation="portrait" >
         </activity>
 

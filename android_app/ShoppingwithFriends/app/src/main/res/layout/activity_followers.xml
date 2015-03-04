@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@color/accent_blue">
+<com.liuguangqiang.swipeback.SwipeBackLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_followers_swipeBackLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="@color/accent_blue">
 
-    <include
-        android:id="@+id/activity_followers_toolbar"
-        layout="@layout/toolbar_blue" />
+        <include
+            android:id="@+id/activity_followers_toolbar"
+            layout="@layout/toolbar_pink" />
 
-    <ListView
-        android:id="@+id/activity_followers_listview"
-        android:layout_below="@+id/activity_followers_toolbar"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-    </ListView>
+        <ListView
+            android:id="@+id/activity_followers_listview"
+            android:layout_below="@+id/activity_followers_toolbar"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        </ListView>
 
-</RelativeLayout>
+    </RelativeLayout>
+</com.liuguangqiang.swipeback.SwipeBackLayout>

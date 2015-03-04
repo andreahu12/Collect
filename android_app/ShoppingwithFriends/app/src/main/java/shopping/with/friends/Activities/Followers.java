@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.JsonObject;
+import com.liuguangqiang.swipeback.SwipeBackLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +40,7 @@ public class Followers extends ActionBarActivity {
     private ListView followersListView;
     private Profile profile;
     private ArrayList<Profile> followersList;
+    private SwipeBackLayout swipeBackLayout;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -58,6 +60,9 @@ public class Followers extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.activity_followers_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        swipeBackLayout = (SwipeBackLayout) findViewById(R.id.activity_followers_swipeBackLayout);
+        swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
 
         followersListView = (ListView) findViewById(R.id.activity_followers_listview);
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.liuguangqiang.swipeback.SwipeBackLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/aep_swipeBackLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="@color/main_blue">
+
+        <include layout="@layout/toolbar_pink"
+            android:id="@+id/aep_toolbar"/>
+
+        <TextView
+            android:layout_below="@id/aep_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="Edit Profile" />
+
+        <Button
+            android:id="@+id/aep_save_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_button_pink"
+            android:layout_alignParentBottom="true"
+            android:text="Save changes"/>
+
+    </RelativeLayout>
+</com.liuguangqiang.swipeback.SwipeBackLayout>

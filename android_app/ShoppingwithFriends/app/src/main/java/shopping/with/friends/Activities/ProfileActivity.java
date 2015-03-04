@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
+import com.liuguangqiang.swipeback.SwipeBackLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +44,7 @@ public class ProfileActivity extends ActionBarActivity {
     private TextView usernameTextView;
     private Button followersButton;
     private Button followingButton;
+    private SwipeBackLayout swipeBackLayout;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -71,6 +73,9 @@ public class ProfileActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.activity_profile_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        swipeBackLayout = (SwipeBackLayout) findViewById(R.id.ap_swipeBackLayout);
+        swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
 
         getUserData(user_id);
 
