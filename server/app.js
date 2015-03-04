@@ -11,11 +11,9 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 
 var User = require('./models/userModel');
-var UserController = require('./controllers/UserController');
-var userController = new UserController(User);
+var userController = require('./controllers/UserController');
 
-var PostController = require('./controllers/PostController');
-var postController = new PostController();
+var postController = require('./controllers/PostController');
 
 // Configs
 app.set('port', config.port);

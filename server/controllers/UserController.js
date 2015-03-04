@@ -14,12 +14,10 @@ var UserUtils = require('../utils/user');
 var userUtils = new UserUtils();
 
 // Constructor
-var UserController = function(User) {
-    User = User;
-};
+var UserController = {};
 
 // Gets list of followers
-UserController.prototype.getFollowers = function(req, res) {
+UserController.getFollowers = function(req, res) {
     var id = req.query.user_id;
     var followers = [];
 
@@ -65,7 +63,7 @@ UserController.prototype.getFollowers = function(req, res) {
 
 
 // Gets list of following
-UserController.prototype.getFollowing = function(req, res) {
+UserController.getFollowing = function(req, res) {
     var id = req.query.user_id;
     var following = [];
 
@@ -109,7 +107,7 @@ UserController.prototype.getFollowing = function(req, res) {
         });
 };
 
-UserController.prototype.get = function(req, res) {
+UserController.get = function(req, res) {
     User.findById(req.query.id)
         .exec(function(err, user) {
             if (err) {
@@ -134,7 +132,7 @@ UserController.prototype.get = function(req, res) {
 };
 
 // Follows user
-UserController.prototype.follow = function(req, res) {
+UserController.follow = function(req, res) {
     var id = req.body.user_id;
     var followingId = req.body.followingId;
 
@@ -169,7 +167,7 @@ UserController.prototype.follow = function(req, res) {
         });
 };
 
-UserController.prototype.unFollow = function(req, res) {
+UserController.unFollow = function(req, res) {
     var id = req.body.user_id;
     var followingId = req.body.followingId;
 
@@ -214,7 +212,7 @@ UserController.prototype.unFollow = function(req, res) {
         });
 };
 
-UserController.prototype.addFollower = function(req, res) {
+UserController.addFollower = function(req, res) {
     var id = req.body.id;
     var followerId = req.body.followerId;
 
@@ -250,7 +248,7 @@ UserController.prototype.addFollower = function(req, res) {
         });
 };
 
-UserController.prototype.removeFollower = function(req, res) {
+UserController.removeFollower = function(req, res) {
     var id = req.body.user_id;
     var followerId = req.body.followerId;
 
@@ -294,7 +292,7 @@ UserController.prototype.removeFollower = function(req, res) {
         });
 };
 
-UserController.prototype.signup = function(req, res) {
+UserController.signup = function(req, res) {
     passport.authenticate('signup', function(err, user, info) {
         // User not being serialized because no req.login
         // req.login supposed to be called automatically
@@ -317,7 +315,7 @@ UserController.prototype.signup = function(req, res) {
     })(req, res);
 };
 
-UserController.prototype.login = function(req, res) {
+UserController.login = function(req, res) {
     passport.authenticate('login', function(err, user, info) {
         if (!user) {
             return res.json({
@@ -429,7 +427,7 @@ passport.use('signup', new LocalStrategy({
 );
 
 // Gets list of all followers
-UserController.prototype.getAllUsers = function(req, res) {
+UserController.getAllUsers = function(req, res) {
     User.find(function(err, users) {
             if (err)
                 res.send(err);
