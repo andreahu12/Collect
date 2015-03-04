@@ -43,6 +43,7 @@ router.get('/user/get-all-users', userController.getAllUsers);
 router.get('/user/get-user', userController.get);
 // Posts
 router.post('/post/create', postController.create);
+router.get('/posts/all', postController.getAllPosts);
 
 // DB
 var db = mongoose.connect(config.mongoDB, function(err) {
