@@ -8,10 +8,10 @@ var Post = require('../models/postModel');
 var User = require('../models/userModel');
 
 // Constructor
-var PostController = function() {};
+var PostController = {};
 
 
-PostController.prototype.create = function(req, res) {
+PostController.create = function(req, res) {
     var post = new Post(req.body.post);
     post.save(function(err, post) {
         if (err) {
@@ -36,4 +36,4 @@ PostController.prototype.create = function(req, res) {
     });
 };
 
-module.exports = UserController;
+module.exports = PostController;
