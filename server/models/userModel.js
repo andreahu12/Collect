@@ -11,7 +11,8 @@ var UserSchema = new Schema({
 	password: String,
 	email: String,
 	followers: [],
-	following: []
+	following: [],
+	posts: []
 });
 
 module.exports = mongoose.model('UserModel', UserSchema);
