@@ -14,6 +14,9 @@ var User = require('./models/userModel');
 var UserController = require('./controllers/UserController');
 var userController = new UserController(User);
 
+var PostController = require('./controllers/PostController');
+var postController = new PostController();
+
 // Configs
 app.set('port', config.port);
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -40,6 +43,8 @@ router.get('/user/get-following', userController.getFollowing);
 router.get('/user/get-all-users', userController.getAllUsers);
 // General User
 router.get('/user/get-user', userController.get);
+// Posts
+router.post('/post/create', postController.create);
 
 // DB
 var db = mongoose.connect(config.mongoDB, function(err) {
