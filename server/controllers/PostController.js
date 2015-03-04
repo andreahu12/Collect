@@ -11,7 +11,7 @@ var User = require('../models/userModel');
 var PostController = function() {};
 
 
-PostController.prototype.createPost = function(req, res) {
+PostController.prototype.create = function(req, res) {
     var post = new Post(req.body.post);
     post.save(function(err, post) {
         if (err) {
@@ -21,7 +21,7 @@ PostController.prototype.createPost = function(req, res) {
             });
         }
 
-        User.findById(id)
+        User.findById(req.body.id)
             .exec(function(err, user) {
                 user.posts.push(post._id);
 
