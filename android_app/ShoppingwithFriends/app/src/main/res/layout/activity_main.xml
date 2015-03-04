@@ -22,7 +22,7 @@
 
         <RelativeLayout
             android:id="@+id/ma_drawer_main_layout"
-            android:layout_width="240dp"
+            android:layout_width="230dp"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:layout_gravity="start"
@@ -32,49 +32,125 @@
             <RelativeLayout
                 android:id="@+id/drawer_profile_layout"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/selector_button_blue"
                 android:clickable="true"
                 >
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true">
+                    android:id="@+id/ma_drawer_info_wrapper"
+                    android:layout_width="fill_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_height="wrap_content">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/am_drawer_profile_picture"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_centerHorizontal="true"
-                        android:src="@drawable/blank_profile"
-                        app:border_width="2dp"
-                        app:border_color="#ffffff"/>
-
-                    <TextView
-                        android:id="@+id/am_drawer_name_textview"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="20dp"
-                        android:textSize="18dp"
-                        android:layout_below="@+id/am_drawer_profile_picture"
-                        android:textAppearance="@style/TextAppearance.FontPathBold"/>
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="30dp">
 
-                    <TextView
-                        android:id="@+id/am_drawer_username_textview"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:layout_marginTop="10dp"
-                        android:layout_centerHorizontal="true"
-                        android:textSize="14dp"
-                        android:layout_below="@+id/am_drawer_name_textview"
-                        android:textAppearance="@style/TextAppearance.FontPathNormal"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/am_drawer_profile_picture"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/blank_profile"
+                            app:border_width="2dp"
+                            app:border_color="#ffffff"/>
 
+                        <TextView
+                            android:id="@+id/am_drawer_name_textview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="15dp"
+                            android:textSize="18dp"
+                            android:layout_below="@+id/am_drawer_profile_picture"
+                            android:textAppearance="@style/TextAppearance.FontPathBold"/>
+                    </RelativeLayout>
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/am_follows_button_linear_layout"
+                    android:layout_below="@+id/ma_drawer_info_wrapper"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:id="@+id/am_drawer_following_button"
+                        android:clickable="true"
+                        android:background="@drawable/selector_button_transparent">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="15dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/am_drawer_following_count"
+                                android:layout_centerHorizontal="true"
+                                android:textColor="@color/white"
+                                android:text="XXX"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:textSize="12dp"
+                                android:id="@+id/am_drawer_following_text"
+                                android:layout_below="@+id/am_drawer_following_count"
+                                android:layout_centerHorizontal="true"
+                                android:textColor="@color/white"
+                                android:textAppearance="@style/TextAppearance.FontPathBold"
+                                android:text="FOLLOWING"/>
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_weight="0.5"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/am_drawer_followers_button"
+                        android:clickable="true"
+                        android:background="@drawable/selector_button_transparent"
+                        >
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="15dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/am_drawer_followers_count"
+                                android:layout_centerHorizontal="true"
+                                android:textColor="@color/white"
+                                android:text="XXX"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:textSize="12dp"
+                                android:id="@+id/am_drawer_follower_text"
+                                android:layout_below="@+id/am_drawer_followers_count"
+                                android:layout_centerHorizontal="true"
+                                android:textColor="@color/white"
+                                android:textAppearance="@style/TextAppearance.FontPathBold"
+                                android:text="FOLLOWERS"/>
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+                </LinearLayout>
 
 
             </RelativeLayout>

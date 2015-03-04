@@ -30,10 +30,7 @@
 
     <string-array name="ma_slide_drawer_items">
         <item >Main Feed</item>
-        <item >Me</item>
         <item >My Collections</item>
-        <item >Following</item>
-        <item >Followers</item>
         <item >Search</item>
         <item >Settings</item>
     </string-array>

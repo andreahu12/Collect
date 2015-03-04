@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,10 +51,10 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private DrawerMenuAdapter drawerMenuAdapter;
     private RelativeLayout drawerLinearLayout;
     private SharedPreferences preferences;
-    private TextView drawerProfileName, drawerProfileUsername;
+    private TextView drawerProfileName, followingAmount, followersAmount;
     private MainApplication mainApplication;
     private Profile userProfile;
-    private RelativeLayout profileRelativeLayout;
+    private RelativeLayout profileRelativeLayout, followingButton, followersButton;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -77,8 +78,11 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         drawerLinearLayout = (RelativeLayout) findViewById(R.id.ma_drawer_main_layout);
         drawerMenuListview = (ListView) findViewById(R.id.ma_drawer_menu_listview);
         drawerProfileName = (TextView) findViewById(R.id.am_drawer_name_textview);
-        drawerProfileUsername = (TextView) findViewById(R.id.am_drawer_username_textview);
         profileRelativeLayout = (RelativeLayout) findViewById(R.id.drawer_profile_layout);
+        followingButton = (RelativeLayout) findViewById(R.id.am_drawer_following_button);
+        followersButton = (RelativeLayout) findViewById(R.id.am_drawer_followers_button);
+        followingAmount = (TextView) findViewById(R.id.am_drawer_following_count);
+        followersAmount = (TextView) findViewById(R.id.am_drawer_followers_count);
 
         List<DrawerMenuItem> menuItems = generateDrawerMenuItems();
         drawerMenuAdapter = new DrawerMenuAdapter(getApplicationContext(), menuItems);
@@ -102,6 +106,8 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         if (Build.VERSION.SDK_INT >= 21) {
             profileRelativeLayout.setBackground(getResources().getDrawable(R.drawable.selector_button_blue_ripple));
+            followersButton.setBackground(getResources().getDrawable(R.drawable.selector_button_blue_ripple));
+            followingButton.setBackground(getResources().getDrawable(R.drawable.selector_button_blue_ripple));
         }
 
         profileRelativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -111,8 +117,28 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             }
         });
 
+        followingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Following.class);
+                i.putExtra("profile", userProfile);
+                startActivity(i);
+            }
+        });
+
+        followersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Followers.class);
+                i.putExtra("profile", userProfile);
+                startActivity(i);
+            }
+        });
+
         drawerProfileName.setText(userProfile.getName());
-        drawerProfileUsername.setText("@" + userProfile.getUsername());
+        followersAmount.setText(userProfile.getFollowers().size() + "");
+        followingAmount.setText(userProfile.getFollowing().size() + "");
+
 
         if (savedInstanceState == null) {
             setFragment(0, MainFeed.class);
@@ -126,26 +152,13 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 setFragment(0, MainFeed.class);
                 break;
             case 1:
-                setFragment(1, MyProfileFragment.class);
+                setFragment(1, MyCollections.class);
                 break;
             case 2:
-                setFragment(2, MyCollections.class);
+                setFragment(2, Search.class);
                 break;
             case 3:
-                Intent followingIntent = new Intent(this, Following.class);
-                followingIntent.putExtra("profile", userProfile);
-                startActivity(followingIntent);
-                break;
-            case 4:
-                Intent followersIntent = new Intent(this, Followers.class);
-                followersIntent.putExtra("profile", userProfile);
-                startActivity(followersIntent);
-                break;
-            case 5:
-                setFragment(5, Search.class);
-                break;
-            case 6:
-                setFragment(6, Settings.class);
+                setFragment(3, Settings.class);
                 break;
         }
     }
