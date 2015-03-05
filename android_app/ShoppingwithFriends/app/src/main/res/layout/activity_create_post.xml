@@ -1,22 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.liuguangqiang.swipeback.SwipeBackLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.liuguangqiang.swipeback.SwipeBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/acp_swipeBackLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
     <RelativeLayout
-        android:layout_width="match_parent" android:layout_height="match_parent">
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:background="@color/main_blue">
 
         <include layout="@layout/toolbar_pink"
             android:id="@+id/acp_toolbar"/>
 
         <RelativeLayout
             android:id="@+id/acp_content_layout"
-            android:layout_below="@+id/acp_toolbar"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@color/main_blue">
+            android:layout_below="@id/acp_toolbar">
 
+            <ImageView
+                android:id="@+id/acp_square_image_view"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/beach"
+                android:scaleType="centerCrop"/>
+
+            <RelativeLayout
+                android:id="@+id/acp_information_layout"
+                android:layout_below="@+id/acp_square_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+                <RelativeLayout
+                    android:id="@+id/acp_title_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/acp_profile_pic"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/blank_profile"
+                        android:layout_margin="15dp"/>
+
+                    <EditText
+                        android:id="@+id/acp_title_et"
+                        android:layout_toRightOf="@id/acp_profile_pic"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textAppearance="@style/TextAppearance.FontPathBold"
+                        android:layout_marginRight="30dp"
+                        android:hint="Give this post a title!"
+                        android:backgroundTint="@color/main_pink"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/acp_title_layout"
+                    android:background="@color/accent_blue"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/acp_description_layout"
+                    android:layout_below="@+id/acp_title_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/acp_et_wrapper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/acp_fab"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="10dp">
+
+                        <EditText
+                            android:id="@+id/acp_description_et"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentTop="true"
+                            android:textSize="14dp"
+                            android:textAppearance="@style/TextAppearance.FontPathNormal"
+                            android:hint="Write a description..."
+                            android:backgroundTint="@color/main_pink"/>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/acp_description_et"
+                            android:weightSum="1"
+                            android:layout_marginTop="10dp"
+                            >
+
+                            <TextView
+                                android:layout_marginTop="3dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$"
+                                android:textSize="16dp"
+                                android:textAppearance="@style/TextAppearance.FontPathNormal"/>
+
+                            <EditText
+                                android:id="@+id/acp_price_et"
+                                android:layout_weight="0.2"
+                                android:layout_width="match_parent"
+                                android:layout_gravity="left"
+                                android:textSize="14dp"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:hint="Item price"
+                                android:textAppearance="@style/TextAppearance.FontPathNormal"
+                                android:backgroundTint="@color/main_pink"
+                                android:inputType="numberDecimal"/>
+
+                            <RelativeLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_weight="0.7"></RelativeLayout>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <com.melnykov.fab.FloatingActionButton
+                        android:id="@+id/acp_fab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="15dp"
+                        fab:fab_colorNormal="@color/main_pink"
+                        fab:fab_colorPressed="@color/main_pink_dark"
+                        android:src="@drawable/ic_done"/>
+                </RelativeLayout>
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
 </com.liuguangqiang.swipeback.SwipeBackLayout>

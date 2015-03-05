@@ -1,13 +1,35 @@
 package shopping.with.friends.Activities;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Display;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import com.google.gson.JsonObject;
 import com.liuguangqiang.swipeback.SwipeBackLayout;
+import com.melnykov.fab.FloatingActionButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import shopping.with.friends.Api.ApiInterface;
+import shopping.with.friends.MainApplication;
+import shopping.with.friends.Objects.Post;
+import shopping.with.friends.Objects.Profile;
 import shopping.with.friends.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -16,25 +38,95 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  */
 public class CreatePost extends ActionBarActivity {
 
+    private MainApplication mainApplication;
+    private Profile profile;
     private Toolbar toolbar;
     private SwipeBackLayout swipeBackLayout;
+    private EditText titleET, descriptionET, priceET;
+    private ImageView imageView;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    /**
+     * Create a post activity
+     * Uses retrofit
+     * Sets imageview size to be square depending on screen width
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
 
+        mainApplication = (MainApplication) getApplicationContext();
+        profile = mainApplication.getProfile();
+
         toolbar = (Toolbar) findViewById(R.id.acp_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        imageView = (ImageView) findViewById(R.id.acp_square_image_view);
+        Display display = getWindowManager().getDefaultDisplay();
+        int swidth = display.getWidth();
+        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+        params.width = ViewGroup.LayoutParams.FILL_PARENT;
+        params.height = swidth ;
+        imageView.setLayoutParams(params);
+
         swipeBackLayout = (SwipeBackLayout) findViewById(R.id.acp_swipeBackLayout);
         swipeBackLayout.setDragEdge(SwipeBackLayout.DragEdge.LEFT);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            swipeBackLayout.setElevation(1);
+        }
+
+        titleET = (EditText) findViewById(R.id.acp_title_et);
+        descriptionET = (EditText) findViewById(R.id.acp_description_et);
+        priceET = (EditText) findViewById(R.id.acp_price_et);
+
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.acp_fab);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Post post = new Post();
+                post.setTitle(titleET.getText().toString().trim());
+                post.setDescription(descriptionET.getText().toString().trim());
+                post.setPrice(priceET.getText().toString().trim());
+                post.setUserID(profile.getId());
+
+                RestAdapter restAdapter = new RestAdapter.Builder()
+                        .setEndpoint("http://" + getString(R.string.server_address))
+                        .build();
+
+                ApiInterface apiInterface = restAdapter.create(ApiInterface.class);
+                apiInterface.createPost(post.getTitle(), post.getPrice(), post.getDescription(), profile.getId(), new Callback<JsonObject>() {
+                    @Override
+                    public void success(JsonObject jsonObject, Response response) {
+                        try {
+                            JSONObject jsonObjectString = new JSONObject(jsonObject.toString());
+                            if (jsonObjectString.getBoolean("status")) {
+                                finish();
+                            } else {
+                                Toast.makeText(CreatePost.this, jsonObjectString.get("message").toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Toast.makeText(CreatePost.this, "Sorry there was an error, please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     @Override

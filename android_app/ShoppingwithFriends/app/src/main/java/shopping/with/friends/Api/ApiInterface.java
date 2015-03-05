@@ -39,6 +39,11 @@ public interface ApiInterface {
     @POST("/api/user/un-follow")
     void unFollowUser(@Field("user_id") String myId, @Field("followingId") String theirId, Callback<JsonObject> callback);
 
+    @FormUrlEncoded
+    @POST("/api/post/create")
+    void createPost(@Field("postTitle") String title, @Field("postPrice") String price, @Field("postDescription") String description,
+                    @Field("userId") String userID, Callback<JsonObject> callback);
+
     @GET("/api/user/get-followers")
     void getFollowers(@Query("user_id") String id, Callback<JsonObject> callback);
 
@@ -50,4 +55,7 @@ public interface ApiInterface {
 
     @GET("/api/user/get-user")
     void getUser(@Query("id") String userId, Callback<JsonObject> callback);
+
+    @GET("/api/posts/all")
+    void getAllPosts(Callback<JsonObject> callback);
 }
