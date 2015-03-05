@@ -3,6 +3,6 @@ Backend written in javascript with MEAN. Frontend Android app written in Java wi
 
 To clone:
 
-`$ git clone https://github.com/rbro112/fiddy-six.git`
+`$ git clone https://github.com/rbro112/Collect.git`
 
 More explaining to come
