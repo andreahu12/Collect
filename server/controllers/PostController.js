@@ -12,7 +12,14 @@ var PostController = {};
 
 
 PostController.create = function(req, res) {
-    var post = new Post(req.body.post);
+
+    var post = new Post({
+        title: req.body.postTitle,
+        price: req.body.postPrice,
+        user: req.body.userId,
+        description: req.body.postDescription
+    });
+
     post.save(function(err, post) {
         if (err) {
             return res.json({
@@ -21,7 +28,7 @@ PostController.create = function(req, res) {
             });
         }
 
-        User.findById(req.body.id)
+        User.findById(req.body.userId)
             .exec(function(err, user) {
                 user.posts.push(post._id);
 
