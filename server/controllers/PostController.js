@@ -36,4 +36,22 @@ PostController.create = function(req, res) {
     });
 };
 
+PostController.getAllPosts = function(req, res) {
+    Post.find(function(err, posts) {
+        if (err) {
+            return res.json({
+                status: false,
+                message: 'An unknown error occurred'
+            });
+        }
+
+
+        return res.json({
+            status: true,
+            posts: posts
+        });
+    });
+}
+
+
 module.exports = PostController;
