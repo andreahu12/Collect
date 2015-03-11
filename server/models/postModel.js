@@ -10,7 +10,11 @@ var PostSchema = new Schema({
 	description: String,
 	title: String,
 	price: String,
-	user: String
+	user: String,
+	location: {
+		lat: String,
+		long: String
+	}
 });
 
 module.exports = mongoose.model('PostModel', PostSchema);
