@@ -8,6 +8,10 @@ import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.JsonObject;
@@ -37,6 +41,12 @@ public class SplashScreen extends ActionBarActivity {
     private String emailPref, passwordPref;
     private ArrayList<String> followersIdsList, followingIdsList;
     private boolean loginSuccessful;
+    private float oldAngle = 0;
+    private float newAngle = 55;
+    private float pivotX = .5f;
+    private float pivotY = .295f;
+    private ImageView rotator;
+    private RotateAnimation animation;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -47,6 +57,14 @@ public class SplashScreen extends ActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+        rotator = (ImageView) findViewById(R.id.ss_logo);
+        animation = new RotateAnimation(oldAngle, newAngle, Animation.RELATIVE_TO_SELF, pivotX, Animation.RELATIVE_TO_SELF, pivotY);
+        animation.setDuration(12000);
+        animation.setRepeatMode(Animation.RESTART);
+        animation.setRepeatCount(Animation.INFINITE);
+        CycleInterpolator change = new CycleInterpolator(10f);
+        animation.setInterpolator(change);
+        rotator.startAnimation(animation);
 
         followersIdsList = new ArrayList<>();
         followingIdsList = new ArrayList<>();
@@ -95,14 +113,35 @@ public class SplashScreen extends ActionBarActivity {
                             MainApplication mainApplication = (MainApplication) getApplicationContext();
                             mainApplication.setProfile(profile);
 
-                            Intent mainActivity = new Intent(SplashScreen.this, MainActivity.class);
-                            startActivity(mainActivity);
-                            finish();
+                            new CountDownTimer(500, 500) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+                                }
+
+                                @Override
+                                public void onFinish() {
+                                    Intent i = new Intent(SplashScreen.this, LoginSelectorActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                    rotator.clearAnimation();
+                                }
+                            }.start();
+
                         } else {
                             Toast.makeText(getBaseContext(), "Error logging in. Please login again.", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(SplashScreen.this, LoginSelectorActivity.class);
-                            startActivity(i);
-                            finish();
+                            new CountDownTimer(500, 500) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+                                }
+
+                                @Override
+                                public void onFinish() {
+                                    Intent i = new Intent(SplashScreen.this, LoginSelectorActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                    rotator.clearAnimation();
+                                }
+                            }.start();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -126,6 +165,7 @@ public class SplashScreen extends ActionBarActivity {
                     Intent i = new Intent(SplashScreen.this, LoginSelectorActivity.class);
                     startActivity(i);
                     finish();
+                    rotator.clearAnimation();
                 }
             }.start();
         }

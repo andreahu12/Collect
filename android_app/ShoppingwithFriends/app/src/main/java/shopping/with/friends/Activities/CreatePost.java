@@ -51,12 +51,6 @@ public class CreatePost extends ActionBarActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    /**
-     * Create a post activity
-     * Uses retrofit
-     * Sets imageview size to be square depending on screen width
-     * @param savedInstanceState
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
