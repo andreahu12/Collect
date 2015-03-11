@@ -1,20 +1,21 @@
 package shopping.with.friends.Activities;
 
 import android.content.Context;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.JsonObject;
 import com.liuguangqiang.swipeback.SwipeBackLayout;
 import com.melnykov.fab.FloatingActionButton;
@@ -87,18 +88,27 @@ public class CreatePost extends ActionBarActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                double longitude = location.getLongitude();
+                double latitude = location.getLatitude();
+
                 Post post = new Post();
                 post.setTitle(titleET.getText().toString().trim());
                 post.setDescription(descriptionET.getText().toString().trim());
                 post.setPrice(priceET.getText().toString().trim());
                 post.setUserID(profile.getId());
+                post.setLongitude(longitude);
+                post.setLatitiude(latitude);
 
                 RestAdapter restAdapter = new RestAdapter.Builder()
                         .setEndpoint("http://" + getString(R.string.server_address))
                         .build();
 
+                String locationJson = "{lat: " + latitude + ",long: " + longitude + "}";
+
                 ApiInterface apiInterface = restAdapter.create(ApiInterface.class);
-                apiInterface.createPost(post.getTitle(), post.getPrice(), post.getDescription(), profile.getId(), new Callback<JsonObject>() {
+                apiInterface.createPost(post.getTitle(), post.getPrice(), post.getDescription(), profile.getId(), latitude + "", longitude + "", new Callback<JsonObject>() {
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
                         try {

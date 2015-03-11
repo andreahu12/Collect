@@ -11,15 +11,19 @@ public class Post {
     private String description;
     private String price;
     private String userID;
+    private double longitude;
+    private double latitiude;
 
     public Post() {
     }
 
-    public Post(String title, String description, String price, String userID) {
+    public Post(String title, String description, String price, String userID, double longitude, double latitiude) {
         this.title = title;
         this.description = description;
         this.price = price;
         this.userID = userID;
+        this.longitude = longitude;
+        this.latitiude = latitiude;
     }
 
     public String getPrice() {
@@ -52,5 +56,21 @@ public class Post {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    public double getLatitiude() {
+        return latitiude;
+    }
+
+    public void setLatitiude(double latitiude) {
+        this.latitiude = latitiude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 }

@@ -78,7 +78,7 @@ public class PostListviewAdapter extends BaseAdapter {
 
         holder.titleText.setText(post.getTitle());
         holder.descriptionText.setText(post.getDescription());
-        holder.priceText.setText(post.getPrice());
+        holder.priceText.setText("$" + post.getPrice());
 
 
         convertView.setTag(holder);

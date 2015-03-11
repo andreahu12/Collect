@@ -42,7 +42,7 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("/api/post/create")
     void createPost(@Field("postTitle") String title, @Field("postPrice") String price, @Field("postDescription") String description,
-                    @Field("userId") String userID, Callback<JsonObject> callback);
+                    @Field("userId") String userID, @Field("postLat") String latitude, @Field("postLong") String longitude, Callback<JsonObject> callback);
 
     @GET("/api/user/get-followers")
     void getFollowers(@Query("user_id") String id, Callback<JsonObject> callback);
@@ -58,4 +58,7 @@ public interface ApiInterface {
 
     @GET("/api/posts/all")
     void getAllPosts(Callback<JsonObject> callback);
+
+    @GET("/api/posts/locations")
+    void getAllLocations(Callback<JsonObject> callback);
 }

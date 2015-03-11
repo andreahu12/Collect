@@ -120,7 +120,7 @@ public class SplashScreen extends ActionBarActivity {
 
                                 @Override
                                 public void onFinish() {
-                                    Intent i = new Intent(SplashScreen.this, LoginSelectorActivity.class);
+                                    Intent i = new Intent(SplashScreen.this, MainActivity.class);
                                     startActivity(i);
                                     finish();
                                     rotator.clearAnimation();

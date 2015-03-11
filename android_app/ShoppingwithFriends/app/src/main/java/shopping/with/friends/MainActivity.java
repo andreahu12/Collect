@@ -29,6 +29,7 @@ import java.util.List;
 import shopping.with.friends.Activities.Followers;
 import shopping.with.friends.Activities.Following;
 import shopping.with.friends.Drawer.DrawerMenuAdapter;
+import shopping.with.friends.Fragments.Map;
 import shopping.with.friends.Objects.DrawerMenuItem;
 import shopping.with.friends.Fragments.MainFeed;
 import shopping.with.friends.Fragments.MyCollections;
@@ -55,6 +56,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     private MainApplication mainApplication;
     private Profile userProfile;
     private RelativeLayout profileRelativeLayout, followingButton, followersButton;
+    private android.support.v4.app.FragmentManager fragmentManager;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -158,8 +160,12 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 setFragment(2, Search.class);
                 break;
             case 3:
-                setFragment(3, Settings.class);
+                setFragment(3, Map.class);
                 break;
+            case 4:
+                setFragment(4, Settings.class);
+                break;
+
         }
     }
 
@@ -188,7 +194,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     public void setFragment(int position, Class<? extends Fragment> fragmentClass) {
         try {
             Fragment fragment = fragmentClass.newInstance();
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.ma_drawer_frame_container, fragment, fragmentClass.getSimpleName());
             fragmentTransaction.commit();
