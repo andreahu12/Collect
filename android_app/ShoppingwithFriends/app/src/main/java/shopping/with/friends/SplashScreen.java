@@ -150,7 +150,11 @@ public class SplashScreen extends ActionBarActivity {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Log.d("Error", error.toString());
+                    Toast.makeText(SplashScreen.this, "Couldn't connect, check IP", Toast.LENGTH_SHORT).show(); // TODO: Debug only
+                    Intent i = new Intent(SplashScreen.this, LoginSelectorActivity.class);
+                    startActivity(i);
+                    finish();
+                    rotator.clearAnimation();
                 }
             });
         } else {

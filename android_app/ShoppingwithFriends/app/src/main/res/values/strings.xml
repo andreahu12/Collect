@@ -22,7 +22,7 @@
     <string name="edit_profile_activity">Edit Profile</string>
     <string name="create_profile_activity">New Post</string>
 
-    <string name="server_address">128.61.70.181:3000</string>
+    <string name="server_address">192.168.0.7:3000</string>
 
     <!-- Preferences -->
     <string name="email_pref">email</string>
