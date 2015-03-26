@@ -46,7 +46,7 @@ public class SplashScreen extends ActionBarActivity {
     private float pivotX = .5f;
     private float pivotY = .295f;
     private ImageView rotator;
-    private RotateAnimation animation;
+    private RotateAnimation tagAnimation;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -58,13 +58,13 @@ public class SplashScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         rotator = (ImageView) findViewById(R.id.ss_logo);
-        animation = new RotateAnimation(oldAngle, newAngle, Animation.RELATIVE_TO_SELF, pivotX, Animation.RELATIVE_TO_SELF, pivotY);
-        animation.setDuration(12000);
-        animation.setRepeatMode(Animation.RESTART);
-        animation.setRepeatCount(Animation.INFINITE);
+        tagAnimation = new RotateAnimation(oldAngle, newAngle, Animation.RELATIVE_TO_SELF, pivotX, Animation.RELATIVE_TO_SELF, pivotY);
+        tagAnimation.setDuration(12000);
+        tagAnimation.setRepeatMode(Animation.RESTART);
+        tagAnimation.setRepeatCount(Animation.INFINITE);
         CycleInterpolator change = new CycleInterpolator(10f);
-        animation.setInterpolator(change);
-        rotator.startAnimation(animation);
+        tagAnimation.setInterpolator(change);
+        rotator.startAnimation(tagAnimation);
 
         followersIdsList = new ArrayList<>();
         followingIdsList = new ArrayList<>();
