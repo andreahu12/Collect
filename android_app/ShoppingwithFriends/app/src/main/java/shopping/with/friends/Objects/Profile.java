@@ -1,8 +1,5 @@
 package shopping.with.friends.Objects;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -16,6 +13,7 @@ public class Profile implements Serializable {
     private String email;
     private String password;
     private String username;
+    private int thresholdPrice;
     private ArrayList<String> followersIds;
     private ArrayList<String> followingIds;
 
@@ -98,5 +96,13 @@ public class Profile implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getThresholdPrice() {
+        return thresholdPrice;
+    }
+
+    public void setThresholdPrice(int thresholdPrice) {
+        this.thresholdPrice = thresholdPrice;
     }
 }

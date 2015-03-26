@@ -100,7 +100,6 @@ public class Map extends Fragment implements LocationListener{
                     JSONObject mainObject = new JSONObject(jsonObject.toString());
                     if (mainObject.getBoolean("status")) {
                         JSONArray locationArray = mainObject.getJSONArray("locations");
-                        ArrayList<LatLng> locations = new ArrayList<LatLng>();
                         for (int i = 0; i < locationArray.length(); i++) {
                             JSONObject obj = locationArray.getJSONObject(i);
                             double latitude = Double.parseDouble(obj.getString("lat"));

@@ -107,6 +107,7 @@ public class SplashScreen extends ActionBarActivity {
                             profile.setPassword(userObject.getString("password"));
                             profile.setUsername(userObject.getString("username"));
                             profile.setName(userObject.getString("name"));
+                            profile.setThresholdPrice(Integer.parseInt(userObject.getString("threshold")));
                             profile.setFollowers(followersIdsList);
                             profile.setFollowing(followingIdsList);
 

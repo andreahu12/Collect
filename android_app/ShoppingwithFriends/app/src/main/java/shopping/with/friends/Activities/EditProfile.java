@@ -1,24 +1,15 @@
 package shopping.with.friends.Activities;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.liuguangqiang.swipeback.SwipeBackLayout;
 
-import shopping.with.friends.Login.LoginSelectorActivity;
-import shopping.with.friends.MainActivity;
 import shopping.with.friends.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

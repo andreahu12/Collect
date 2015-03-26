@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.JsonObject;
 import com.liuguangqiang.swipeback.SwipeBackLayout;
 import com.melnykov.fab.FloatingActionButton;
@@ -35,7 +34,7 @@ import shopping.with.friends.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
- * Created by ryanbrooks on 3/4/15.
+ * Created by Ryan Brooks on 3/4/15.
  */
 public class CreatePost extends ActionBarActivity {
 
@@ -68,7 +67,7 @@ public class CreatePost extends ActionBarActivity {
         Display display = getWindowManager().getDefaultDisplay();
         int swidth = display.getWidth();
         ViewGroup.LayoutParams params = imageView.getLayoutParams();
-        params.width = ViewGroup.LayoutParams.FILL_PARENT;
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = swidth ;
         imageView.setLayoutParams(params);
 
@@ -89,14 +88,14 @@ public class CreatePost extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                 double longitude = location.getLongitude();
                 double latitude = location.getLatitude();
 
                 Post post = new Post();
                 post.setTitle(titleET.getText().toString().trim());
                 post.setDescription(descriptionET.getText().toString().trim());
-                post.setPrice(priceET.getText().toString().trim());
+                post.setPrice(Integer.parseInt(priceET.getText().toString().trim()));
                 post.setUserID(profile.getId());
                 post.setLongitude(longitude);
                 post.setLatitiude(latitude);
@@ -105,10 +104,8 @@ public class CreatePost extends ActionBarActivity {
                         .setEndpoint("http://" + getString(R.string.server_address))
                         .build();
 
-                String locationJson = "{lat: " + latitude + ",long: " + longitude + "}";
-
                 ApiInterface apiInterface = restAdapter.create(ApiInterface.class);
-                apiInterface.createPost(post.getTitle(), post.getPrice(), post.getDescription(), profile.getId(), latitude + "", longitude + "", new Callback<JsonObject>() {
+                apiInterface.createPost(post.getTitle(), post.getPrice() + "", post.getDescription(), profile.getId(), latitude + "", longitude + "", new Callback<JsonObject>() {
                     @Override
                     public void success(JsonObject jsonObject, Response response) {
                         try {

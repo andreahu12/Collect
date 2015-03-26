@@ -18,8 +18,8 @@ import shopping.with.friends.R;
  */
 public class DrawerMenuAdapter extends BaseAdapter {
 
-    List<DrawerMenuItem> drawerItems;
-    Context context;
+    private List<DrawerMenuItem> drawerItems;
+    private Context context;
 
     public DrawerMenuAdapter(Context context, List<DrawerMenuItem> drawerItems) {
         this.drawerItems = drawerItems;

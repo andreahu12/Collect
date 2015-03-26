@@ -1,11 +1,9 @@
 package shopping.with.friends;
 
 import android.app.Application;
-import android.content.Context;
 
 import shopping.with.friends.Objects.Profile;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by Ryan Brooks on 2/17/15.

@@ -10,13 +10,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import shopping.with.friends.Objects.Post;
-import shopping.with.friends.Objects.Profile;
 import shopping.with.friends.R;
 
 /**
@@ -65,7 +62,7 @@ public class PostListviewAdapter extends BaseAdapter {
             Display display = wm.getDefaultDisplay();
             int swidth = display.getWidth();
             ViewGroup.LayoutParams params = holder.image.getLayoutParams();
-            params.width = ViewGroup.LayoutParams.FILL_PARENT;
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
             params.height = swidth ;
             holder.image.setLayoutParams(params);
 

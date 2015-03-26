@@ -3,7 +3,6 @@ package shopping.with.friends.Login;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
@@ -17,23 +16,11 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -130,6 +117,7 @@ public class RegisterActivity extends ActionBarActivity {
                                     profile.setPassword(mainObject.getString("password"));
                                     profile.setUsername(mainObject.getString("username"));
                                     profile.setName(mainObject.getString("name"));
+                                    profile.setThresholdPrice(Integer.parseInt(mainObject.getString("threshold")));
                                     profile.setFollowers(followersIdsList);
                                     profile.setFollowing(followingIdsList);
 

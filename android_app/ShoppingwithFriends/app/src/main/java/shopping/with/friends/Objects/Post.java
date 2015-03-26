@@ -1,7 +1,5 @@
 package shopping.with.friends.Objects;
 
-import java.util.ArrayList;
-
 /**
  * Created by Ryan Brooks on 3/4/15.
  */
@@ -9,7 +7,7 @@ public class Post {
 
     private String title;
     private String description;
-    private String price;
+    private int price;
     private String userID;
     private double longitude;
     private double latitiude;
@@ -17,7 +15,7 @@ public class Post {
     public Post() {
     }
 
-    public Post(String title, String description, String price, String userID, double longitude, double latitiude) {
+    public Post(String title, String description, int price, String userID, double longitude, double latitiude) {
         this.title = title;
         this.description = description;
         this.price = price;
@@ -26,11 +24,11 @@ public class Post {
         this.latitiude = latitiude;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

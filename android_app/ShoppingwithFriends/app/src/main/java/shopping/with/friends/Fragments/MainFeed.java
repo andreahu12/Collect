@@ -25,12 +25,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import shopping.with.friends.Activities.CreatePost;
 import shopping.with.friends.Adapters.PostListviewAdapter;
-import shopping.with.friends.Adapters.UserListviewAdapter;
 import shopping.with.friends.Api.ApiInterface;
-import shopping.with.friends.MainActivity;
-import shopping.with.friends.MainApplication;
 import shopping.with.friends.Objects.Post;
-import shopping.with.friends.Objects.Profile;
 import shopping.with.friends.R;
 
 /**
@@ -48,6 +44,7 @@ public class MainFeed extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         //TODO: Update listview
     }
 
@@ -91,7 +88,7 @@ public class MainFeed extends Fragment {
                             post.setUserID(object.getString("user"));
                             post.setTitle(object.getString("title"));
                             post.setDescription(object.getString("description"));
-                            post.setPrice(object.getString("price"));
+                            post.setPrice(Integer.parseInt(object.getString("price")));
                             posts.add(post);
                         }
                         PostListviewAdapter postListviewAdapter = new PostListviewAdapter(getActivity().getApplicationContext(), posts);
@@ -102,13 +99,11 @@ public class MainFeed extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Toast.makeText(getActivity(), "Error. " + error.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
 

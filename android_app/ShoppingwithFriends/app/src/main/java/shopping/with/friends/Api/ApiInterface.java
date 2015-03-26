@@ -40,6 +40,10 @@ public interface ApiInterface {
     void unFollowUser(@Field("user_id") String myId, @Field("followingId") String theirId, Callback<JsonObject> callback);
 
     @FormUrlEncoded
+    @POST("/api/user/change-threshold")
+    void changeThreshold(@Field("user_id") String myId, @Field("threshold") String newThreshold, Callback<JsonObject> callback);
+
+    @FormUrlEncoded
     @POST("/api/post/create")
     void createPost(@Field("postTitle") String title, @Field("postPrice") String price, @Field("postDescription") String description,
                     @Field("userId") String userID, @Field("postLat") String latitude, @Field("postLong") String longitude, Callback<JsonObject> callback);

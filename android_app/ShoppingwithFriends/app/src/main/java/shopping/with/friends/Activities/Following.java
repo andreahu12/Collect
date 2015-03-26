@@ -26,7 +26,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import shopping.with.friends.Adapters.UserListviewAdapter;
 import shopping.with.friends.Api.ApiInterface;
-import shopping.with.friends.MainApplication;
 import shopping.with.friends.Objects.Profile;
 import shopping.with.friends.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;

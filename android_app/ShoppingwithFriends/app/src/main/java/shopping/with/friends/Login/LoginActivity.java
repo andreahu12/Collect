@@ -14,11 +14,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 
@@ -112,6 +112,7 @@ public class LoginActivity extends ActionBarActivity {
                                     profile.setPassword(userObject.getString("password"));
                                     profile.setUsername(userObject.getString("username"));
                                     profile.setName(userObject.getString("name"));
+                                    profile.setThresholdPrice(Integer.parseInt(userObject.getString("threshold")));
                                     profile.setFollowers(followersIdsList);
                                     profile.setFollowing(followingIdsList);
 

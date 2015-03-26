@@ -24,7 +24,7 @@
             android:id="@+id/ma_drawer_main_layout"
             android:layout_width="230dp"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/main_blue"
             android:layout_gravity="start"
             android:orientation="vertical"
             >
@@ -156,11 +156,44 @@
                 android:id="@+id/ma_drawer_menu_listview"
                 android:layout_below="@+id/drawer_profile_layout"
                 android:layout_width="240dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:choiceMode="singleChoice"
                 android:background="@color/main_blue"
                 android:divider="@null"
                 android:dividerHeight="0dp"/>
+
+            <RelativeLayout
+                android:id="@+id/ma_drawer_threshold_layout"
+                android:background="@drawable/selector_button_blue_inverse"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ma_drawer_menu_listview">
+
+                <TextView
+                    android:id="@+id/ma_drawer_threshold_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:textColor="@color/white"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:text="Blah"
+                    android:textSize="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:textAppearance="@style/TextAppearance.FontPathNormal"/>
+
+                <TextView
+                    android:id="@+id/ma_drawer_threshold_count"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="16dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/main_pink"
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.FontPathNormal"/>
+
+            </RelativeLayout>
 
         </RelativeLayout>
     </android.support.v4.widget.DrawerLayout>
